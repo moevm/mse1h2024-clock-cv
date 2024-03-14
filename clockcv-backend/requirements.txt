@@ -1,0 +1,12 @@
+asyncpg==0.27.0
+black==23.1.0
+certifi==2022.12.7
+fastapi==0.103.1
+flake8==6.0.0
+future==0.18.3
+isort==5.12.0
+pydantic==2.3.0
+pydantic_core==2.6.3
+python-multipart==0.0.6
+starlette==0.27.0
+uvicorn==0.20.0
