@@ -9,9 +9,11 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
-.container {
-  background-image: url('./assets/fon.jpg');
+body {
+  background-image: url('./assets/fon1.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 </style>
