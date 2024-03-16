@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <router-view />
 </template>
 
 <script>
@@ -11,9 +11,12 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
-body {
-  background-image: url('./assets/fon1.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+#app {
+  font-family: "Comfortaa", sans-serif;
 }
+body{
+      background-image: url('./assets/fon1.jpg');
+      background-repeat: no-repeat;
+      background-size: 100%;
+    }
 </style>
