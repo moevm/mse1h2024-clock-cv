@@ -31,8 +31,9 @@ class CVSolver():
         self.finder.find_contours()
         self.draw_sections()
         self.draw_circle()
-        #self.draw_contours()
+        # self.draw_contours()
         self.find_result()
+        self.draw_number()
         cv2.imshow('cldt', self.finder.image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -40,13 +41,13 @@ class CVSolver():
     #нахождение чисел на картинке    
     def first_test(self):
         self.finder.find_numbers()
-        if len(self.finder.numbers) > 0:
-            if len(self.finder.numbers) != 12:
-                self.result = 2
-            else:
-                self.result = 3
-        else:
-            self.result = 1
+        # if len(self.finder.numbers) > 0:
+        #     if len(self.finder.numbers) != 12:
+        #         self.result = 2
+        #     else:
+        #         self.result = 3
+        # else:
+        #     self.result = 1
         
     #нахождение чисел внутри круга, добавляет 1 к result
     def second_test(self):
@@ -62,11 +63,11 @@ class CVSolver():
     
     def find_result(self):
         self.first_test()
-        if self.result > 1:
-            self.second_test()
+        # if self.result > 1:
+        #     self.second_test()
             
-        else: 
-            return
+        # else: 
+        #     return
     
     def draw_sections(self):
         lines = []
@@ -78,7 +79,13 @@ class CVSolver():
     
     def draw_contours(self):
         for dot in self.finder.contours:
+            # if
             cv2.rectangle(self.finder.image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+    
+    def draw_number(self):
+        for dot in self.finder.numbers:
+            if dot:
+                cv2.rectangle(self.finder.image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(255,0,0),2)
             
     def draw_circle(self):
         cv2.circle(self.finder.image,(self.finder.circle[0],self.finder.circle[1]), self.finder.circle[2],(0,255,0),3)

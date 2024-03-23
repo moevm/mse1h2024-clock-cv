@@ -1,15 +1,14 @@
 import cv2
 import numpy as np
+from NumberAnalizer import NumberAnalizer
 import sys
-import math
-
 class elementFinder():
     def __init__(self,image,prototype):
         self.image = image
-        self.prototype = np.array(prototype)
         self.gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
         self.arrows = np.array([])
-        self.numbers = []
+        self.number_finder = NumberAnalizer(prototype)
+        self.numbers = [None for _ in range(12)]
         self.circle = None
         self.contours = []
         self.hierarchy = np.array([])
@@ -31,10 +30,8 @@ class elementFinder():
     
     def find_contours(self):
         ret, threshold = cv2.threshold(self.gray, 127, 255, 0)
-        
         contours, self.hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         for c in contours:
-            
             dot = cv2.boundingRect(c)
             self.contours.append(dot)    
         for c in self.contours:
@@ -44,25 +41,9 @@ class elementFinder():
             if (np.abs(self.circle[0] - centerX) < 20 and np.abs(self.circle[1] - centerY) < 20 and np.abs(self.circle[2] - radius) < 20):
                 self.circle = [centerX, centerY,radius]
                 break
-    
-    
-        
-    def find_numbers(self):
-        for c in self.contours:
-            #предполоагемый размер контура цифра, так как другие контуры это круг и стрелки, которые точно больше эттих размеров
-            if c[2] <=30 and c[3] <=40:
-                temp_image = self.gray[c[1] - 5 :c[1]+c[3] + 5, c[0] - 5:c[0]+c[2] + 5]
-                for p in self.prototype:
-                    result = cv2.matchTemplate(temp_image, p,cv2.TM_CCOEFF_NORMED)
-                    threshold = 0.8
-                    result = np.where(result >= threshold)
-                    for pt in zip(*result[::-1]):
-                        self.numbers.append(temp_image)
-        print(len(self.numbers))
-        print(self.contours)
-        print(self.hierarchy)
           
-    '''
+    def find_numbers(self):
+        self.number_finder.find_numbers(self.contours,self.numbers,self.gray)
      
     def find_arrows(self):
         pass
@@ -80,5 +61,3 @@ class elementFinder():
     def check_sectors(self,sectors):
         pass
         
-    '''
-    
