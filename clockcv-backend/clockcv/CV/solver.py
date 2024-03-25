@@ -29,9 +29,11 @@ class CVSolver():
     def start(self):
         self.finder.find_circle()
         self.finder.find_contours()
+        self.finder.find_numbers()
+        self.finder.find_arrows()
         self.draw_sections()
         self.draw_circle()
-        # self.draw_contours()
+        self.draw_contours()
         self.find_result()
         self.draw_number()
         cv2.imshow('cldt', self.finder.image)
@@ -40,7 +42,7 @@ class CVSolver():
     
     #нахождение чисел на картинке    
     def first_test(self):
-        self.finder.find_numbers()
+        pass
         # if len(self.finder.numbers) > 0:
         #     if len(self.finder.numbers) != 12:
         #         self.result = 2

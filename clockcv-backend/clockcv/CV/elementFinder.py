@@ -1,13 +1,15 @@
 import cv2
 import numpy as np
 from NumberAnalizer import NumberAnalizer
+from arrowAnalizer import ArrowAnalizer
 import sys
 class elementFinder():
     def __init__(self,image,prototype):
         self.image = image
         self.gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-        self.arrows = np.array([])
+        self.arrows = []
         self.number_finder = NumberAnalizer(prototype)
+        self.arrow_finder = ArrowAnalizer()
         self.numbers = [None for _ in range(12)]
         self.circle = None
         self.contours = []
@@ -16,7 +18,6 @@ class elementFinder():
     def find_circle(self):
         gray_blurred = cv2.bitwise_not(cv2.GaussianBlur(self.gray, (7,7), 0)) 
         edges = cv2.Canny(gray_blurred, 50, 150, apertureSize=3)
-
         circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, dp=1, minDist=4, param1=30, param2=72, minRadius=20, maxRadius=10000)
         drawn_circles = [[]]
         drawn_circles[0].append(circles[0,0])
@@ -41,12 +42,13 @@ class elementFinder():
             if (np.abs(self.circle[0] - centerX) < 20 and np.abs(self.circle[1] - centerY) < 20 and np.abs(self.circle[2] - radius) < 20):
                 self.circle = [centerX, centerY,radius]
                 break
+        #print(self.contours)
           
     def find_numbers(self):
         self.number_finder.find_numbers(self.contours,self.numbers,self.gray)
      
     def find_arrows(self):
-        pass
+        self.arrow_finder.start(self.gray,self.numbers,self.circle,self.contours[2])
               
     def read_time(self):
         pass
