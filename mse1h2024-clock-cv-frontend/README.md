@@ -1,4 +1,4 @@
-# mse1h2024-clock-cv-frontend
+# front
 
 ## Project setup
 ```
