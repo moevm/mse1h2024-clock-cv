@@ -23,53 +23,59 @@ class CVSolver():
     def __init__(self,finder):
         self.finder = finder
         self.result = 0
+        self.comments = None
         self.current_time = (21,44)
         self.angles = [(15,45),(45,75),(75,105),(105,135),(135,165),(165,195),(195,225),(225,255),(255,285),(285,315),(315,345),(345,375)] # углы границы для расположения чисел циферблата
         
     def start(self):
         self.finder.find_circle()
         self.finder.find_contours()
-        self.finder.find_numbers()
-        self.finder.find_arrows()
-        self.draw_sections()
-        self.draw_circle()
-        self.draw_contours()
-        self.find_result()
-        self.draw_number()
-        cv2.imshow('cldt', self.finder.image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        return self.find_result()
     
     #нахождение чисел на картинке    
     def first_test(self):
-        pass
-        # if len(self.finder.numbers) > 0:
-        #     if len(self.finder.numbers) != 12:
-        #         self.result = 2
-        #     else:
-        #         self.result = 3
-        # else:
-        #     self.result = 1
+        self.finder.find_numbers()
+        count = sum(1 for elem in self.finder.numbers if elem is not None)
+        if count > 0:
+            if count < 8:
+                self.result = 2
+                self.comments = "Отсутсвует более 4 чисел. Повторите попытку."
+            else:
+                self.result = 3
+                self.second_test()
+        else:
+            self.result = 1
+            self.comments = "Числа не обнаружены. Попробуйте следовать шаблону написания цифр и повторите попытку."
         
-    #нахождение чисел внутри круга, добавляет 1 к result
+    #нахождение чисел внутри круга, добавляет 1 или 2 к result
     def second_test(self):
-        pass
-    
+        count = self.finder.check_inside()
+        if count == 12:
+            self.result += 2
+            self.third_test()
+        elif count >= 8 :
+            self.result += 1
+            self.comments = "Утрачена целостность часов, часть чисел отсутвует или расположена вне круга."
+        else:
+            self.comments = "Числа и циферблат более не связаны друг с другом."
+            
     #определение местоположения чисел внутри круга(сектора)
     def third_test(self):
-        pass
+        count = self.finder.check_sectors(self.angles)
+        if count == 12:
+            self.result += 1
+            self.fourth_test()
+        else:
+            self.comments = "Неправильное расположение цифр на циферблате: они следуют в неверном порядке или расстояние между числами неодинаковое."
    
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
+        print("Дальнейшее оценивание.")
         pass
     
     def find_result(self):
         self.first_test()
-        # if self.result > 1:
-        #     self.second_test()
-            
-        # else: 
-        #     return
+        return (self.finder.image, self.result, self.comments)
     
     def draw_sections(self):
         lines = []
@@ -81,7 +87,6 @@ class CVSolver():
     
     def draw_contours(self):
         for dot in self.finder.contours:
-            # if
             cv2.rectangle(self.finder.image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
     
     def draw_number(self):

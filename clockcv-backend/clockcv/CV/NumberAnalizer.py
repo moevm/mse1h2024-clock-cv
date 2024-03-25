@@ -44,13 +44,14 @@ class NumberAnalizer():
                 max_index = i
         return max_index
     
-    def calculate_distance(self, coord1, coord2):
-        x1, y1, w1, h1 = coord1
-        x2, y2, w2, h2 = coord2
-        center1 = (x1 + w1 // 2, y1 + h1 // 2)
-        center2 = (x2 + w2 // 2, y2 + h2 // 2)
+    def calculate_distance(self, center1, center2):
         distance = ((center1[0] - center2[0])**2 + (center1[1] - center2[1])**2) ** 0.5
         return distance
+    
+    def find_center(self, coord):
+        x, y, w, h = coord
+        center = (x + w // 2, y + h // 2)
+        return center
     
     def find_two_digit_number(self, numbers):
         remove_list = []
@@ -64,7 +65,7 @@ class NumberAnalizer():
                         coord_1 = self.numbers[i][j]
                         coord_2 = self.numbers[k][l]
                         if coord_1 != coord_2:
-                            dist = self.calculate_distance(coord_1, coord_2)
+                            dist = self.calculate_distance(self.find_center(coord_1), self.find_center(coord_2))
                             avg_diagonal = (((coord_1[2] + coord_2[2]) / 2)**2 + ((coord_1[3] + coord_2[3]) / 2)**2) ** 0.5
                             if dist < avg_diagonal:
                                 new_param = self.find_new_pair_parameters(coord_1,coord_2)
@@ -86,3 +87,18 @@ class NumberAnalizer():
         new_h = max (coord_1[1] + coord_1[3], coord_2[1] + coord_2[3]) - new_y
         return (new_x, new_y, new_w, new_h)
     
+    def get_angle(self, numbers, circle):
+        A = np.array([circle[0], circle[1] - circle[2]])
+        B = np.array([circle[0], circle[1]])
+        angle = [None for _ in range(12)]
+        for i in range(len(numbers)):
+            if numbers[i]:
+                C = np.array(self.find_center(numbers[i]))
+                BA = A - B
+                BC = C - B
+                angle_rad = np.arctan2(BC[1], BC[0]) - np.arctan2(BA[1], BA[0])
+                angle_deg = np.degrees(angle_rad)
+                if angle_deg < 15:
+                    angle_deg += 360
+                angle[i] = angle_deg
+        return angle   

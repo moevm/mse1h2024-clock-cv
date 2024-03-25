@@ -53,13 +53,23 @@ class elementFinder():
     def read_time(self):
         pass
     
-    # 0 - нет чисел внутри
-    # 1 - есть не все внутри
-    # 2 - есть все внутри
-    
     def check_inside(self):
-        pass
+        count = 0
+        for num in self.numbers:
+            if num:
+                if self.number_finder.calculate_distance(self.number_finder.find_center(num),(self.circle[0], self.circle[1]))<self.circle[2]:
+                    count+=1
+                else:
+                    self.draw_error(num)  
+        return count
     
     def check_sectors(self,sectors):
-        pass
-        
+        count = 0
+        angle = self.number_finder.get_angle(self.numbers, self.circle)
+        for i in range(len(angle)):
+            if angle:
+                if angle[i] > sectors[i][0] and angle[i] < sectors[i][1]:
+                    count+=1
+                else: 
+                    self.draw_error(self.numbers[i])
+        return count
