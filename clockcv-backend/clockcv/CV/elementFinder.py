@@ -46,9 +46,10 @@ class elementFinder():
           
     def find_numbers(self):
         self.number_finder.find_numbers(self.contours,self.numbers,self.gray)
-     
-    def find_arrows(self):
-        self.arrow_finder.start(self.gray,self.numbers,self.circle)
+   
+    def find_arrows(self,time):
+        return self.arrow_finder.start(self.gray,self.numbers,self.circle,time)
+    
               
     def draw_error(self, coord):
         x, y, w, h = coord
