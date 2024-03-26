@@ -70,6 +70,7 @@ class ArrowAnalizer():
     def find_edge_dots(self,circle):
         if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 > self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
             self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
+
         for ar in self.arrows:
             maxi = 0
             x,y = 0,0
@@ -109,6 +110,7 @@ class ArrowAnalizer():
         hours_theor = (time[0] % 12) / 12 * 360 + time[1] /60 * 30
         self.error_rate = np.abs(minutes_theor - self.angles[1]) + np.abs(hours_theor - self.angles[0])
         return self.error_rate
+
 
         
         

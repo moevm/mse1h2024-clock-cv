@@ -71,6 +71,7 @@ class CVSolver():
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
         print("Дальнейшее оценивание.")
+
         res = self.finder.find_arrows(self.current_time)
         if res == -1 or res >= 60:
             self.comments = "Стрелки не выполняют свою функцию: они одинаковые или указанное время далеко от нужного"
@@ -90,8 +91,7 @@ class CVSolver():
         if self.result != 10:
             self.finder.draw_error(self.finder.arrow_finder.arrow_contour)
                 
-        
-    
+   
     def find_result(self):
         self.first_test()
         return (self.finder.image, self.result, self.comments)
