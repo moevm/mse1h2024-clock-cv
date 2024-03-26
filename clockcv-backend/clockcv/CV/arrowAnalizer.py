@@ -50,6 +50,7 @@ class ArrowAnalizer():
         
         
     def find_arrows(self):
+
         _, threshold = cv2.threshold(self.clean_image, 127, 255, 0)
         contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         for i, c in enumerate(contours):
@@ -57,9 +58,9 @@ class ArrowAnalizer():
             if hierarchy[0, i, -1] == 2:
                 self.arrows.append(dot)
                 cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
-        cv2.imshow('cldt', self.clean_image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        #cv2.imshow('cldt', self.clean_image)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
     
     def find_time(self,circle,circle_contour):
         '''
@@ -75,5 +76,4 @@ class ArrowAnalizer():
         
         
         '''
-        
-        
+        pass

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
-from NumberAnalizer import NumberAnalizer
-from arrowAnalizer import ArrowAnalizer
+from .NumberAnalizer import NumberAnalizer
+from .arrowAnalizer import ArrowAnalizer
 import sys
 class elementFinder():
     def __init__(self,image,prototype):
@@ -68,7 +68,7 @@ class elementFinder():
                 if self.number_finder.calculate_distance(self.number_finder.find_center(num),(self.circle[0], self.circle[1]))<self.circle[2]:
                     count+=1
                 else:
-                    self.draw_error(num)  
+                    self.draw_error(num)
         return count
     
     def check_sectors(self,sectors):
