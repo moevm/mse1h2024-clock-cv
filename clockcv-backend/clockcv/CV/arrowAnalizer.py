@@ -48,7 +48,8 @@ class ArrowAnalizer():
         minimum = 10000000
         for i in range(self.arrow_contour[1], self.arrow_contour[1] + self.arrow_contour[3]):
             for j in range(self.arrow_contour[0], self.arrow_contour[0] + self.arrow_contour[2]):
-                if np.abs(i - circle[1]) + np.abs(j - circle[0]) < minimum:
+                if (i - circle[1]) ** 2 + (j - circle[0]) ** 2 < minimum:
+                    minimum = (i - circle[1]) ** 2 + (j - circle[0]) ** 2
                     self.center = [i,j]
         fill = np.full((40, 40), 255)
         self.clean_image[self.center[0] - 20: self.center[0] + 20, self.center[1] - 20: self.center[1] + 20] = fill
@@ -61,7 +62,9 @@ class ArrowAnalizer():
             dot = cv2.boundingRect(c)
             if hierarchy[0, i, -1] == 2:
                 self.arrows.append(dot)
-                #cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+                cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+                
+        
         
     
     def find_edge_dots(self,circle):
@@ -97,14 +100,16 @@ class ArrowAnalizer():
         print(self.angles)
         cv2.line(self.clean_image,(circle[0] - circle[2],circle[1]), (circle[0] + circle[2],circle[1]),(0,0,255),1)
         cv2.line(self.clean_image,(circle[0], - circle[2]+circle[1]), (circle[0], circle[2] + circle[1]),(0,0,255),1)
+        
+    
+    def find_time(self):
         cv2.imshow('cldt', self.clean_image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-    
-    def find_time(self):
-        minutes = round(self.angles[1] / 360 * 60) % 60
-        hours = round(self.angles[0] / 360 * 12) % 12
+        minutes = np.floor(self.angles[1] / 360 * 60) % 60
+        hours = np.floor(self.angles[0] / 360 * 12) % 12
         self.found_time = (hours,minutes)
+        print(self.found_time)
     
     def find_error_rate(self,circle):
         pass
