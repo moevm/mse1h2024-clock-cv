@@ -25,14 +25,14 @@ class ArrowAnalizer():
             fill = np.full((num[3], num[2]), 255)
             self.clean_image[num[1]: num[1] + num[3], num[0] : num[0] + num[2]] = fill
     
-    def start(self,gray,numbers,circle):
+    def start(self,gray,numbers,circle,time):
         self.clear_image(gray,numbers)
         self.print_center(circle)
         self.find_arrows()
         self.find_edge_dots(circle)
         self.find_angles(circle)
         self.find_time()
-        self.find_error_rate(circle)
+        return self.find_error_rate(time)
     
     def print_center(self,circle):
         self.center = circle[:2]
@@ -68,10 +68,8 @@ class ArrowAnalizer():
         
     
     def find_edge_dots(self,circle):
-        print(self.arrows)
         if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 > self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
             self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
-            
         for ar in self.arrows:
             maxi = 0
             x,y = 0,0
@@ -81,8 +79,6 @@ class ArrowAnalizer():
                         maxi = (circle[0] - j) ** 2 + (circle[1] - i) ** 2
                         x,y =  j,i
             self.dots.append((x,y))
-        #for dot in self.dots:
-            #cv2.circle(self.clean_image,dot,10,(0,0,255),3)
         
            
     def find_angles(self,circle):
@@ -97,21 +93,22 @@ class ArrowAnalizer():
             if angle_deg < 0:
                 angle_deg += 360
             self.angles.append(angle_deg)
-        print(self.angles)
         cv2.line(self.clean_image,(circle[0] - circle[2],circle[1]), (circle[0] + circle[2],circle[1]),(0,0,255),1)
         cv2.line(self.clean_image,(circle[0], - circle[2]+circle[1]), (circle[0], circle[2] + circle[1]),(0,0,255),1)
         
     
     def find_time(self):
-        cv2.imshow('cldt', self.clean_image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
         minutes = np.floor(self.angles[1] / 360 * 60) % 60
         hours = np.floor(self.angles[0] / 360 * 12) % 12
         self.found_time = (hours,minutes)
-        print(self.found_time)
     
-    def find_error_rate(self,circle):
-        pass
+    def find_error_rate(self,time):
+        if np.abs(self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 -( self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2)) <=5:
+            return -1
+        minutes_theor = time[1] / 60 * 360
+        hours_theor = (time[0] % 12) / 12 * 360 + time[1] /60 * 30
+        self.error_rate = np.abs(minutes_theor - self.angles[1]) + np.abs(hours_theor - self.angles[0])
+        return self.error_rate
+
         
         
