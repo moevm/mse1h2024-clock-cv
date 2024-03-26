@@ -53,6 +53,7 @@ class elementFinder():
     def read_time(self):
         pass
     
+    
     def check_inside(self):
         count = 0
         for num in self.numbers:
