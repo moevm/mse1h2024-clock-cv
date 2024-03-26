@@ -68,9 +68,6 @@ class elementFinder():
                     self.draw_error(num)  
         return count
     
-    
-    
-    
     def check_sectors(self,sectors):
         count = 0
         angle = self.number_finder.get_angle(self.numbers, self.circle)
