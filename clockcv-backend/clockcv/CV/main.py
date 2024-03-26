@@ -18,6 +18,3 @@ async def cv_image_recognise(file):
             prototype[i].append(cv2.cvtColor(cv2.imread(f"storage/templates/{i}/{name}"), cv2.COLOR_BGR2GRAY))
     solver = CVSolver(elementFinder(image, prototype))
     return solver.start()
-    # cv2.imshow('cldt', result[0])
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()

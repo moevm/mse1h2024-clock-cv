@@ -111,4 +111,3 @@ class ArrowAnalizer():
         return self.error_rate
 
         
-        
