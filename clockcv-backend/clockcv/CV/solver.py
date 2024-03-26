@@ -20,7 +20,7 @@ from elementFinder import elementFinder,np,cv2,sys
 5. Время, которое показывают стрелки(8-10баллов)
 '''
 class CVSolver():
-    def __init__(self,finder):
+    def __init__(self,finder : elementFinder):
         self.finder = finder
         self.result = 0
         self.comments = None
@@ -71,7 +71,7 @@ class CVSolver():
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
         print("Дальнейшее оценивание.")
-        pass
+        self.finder.find_arrows()
     
     def find_result(self):
         self.first_test()

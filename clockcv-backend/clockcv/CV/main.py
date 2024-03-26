@@ -2,7 +2,7 @@ import os
 from solver import CVSolver,cv2,elementFinder
 
 if __name__ == '__main__':
-    image = cv2.imread('test_image/12error.png')
+    image = cv2.imread('test_image/12_b_9_pm.png')
     prototype = [[] for _ in range(10)]
     for i in range(len(prototype)):
         file_list = os.listdir("templates/"+ str(i))
