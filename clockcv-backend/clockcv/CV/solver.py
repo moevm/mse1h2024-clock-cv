@@ -1,4 +1,5 @@
-from elementFinder import elementFinder,np,cv2,sys
+from .elementFinder import elementFinder,np,sys
+import cv2
 
 '''
 всего 14 контуров должно быть(2 стрелки и 12 чисел)
@@ -20,7 +21,7 @@ from elementFinder import elementFinder,np,cv2,sys
 5. Время, которое показывают стрелки(8-10баллов)
 '''
 class CVSolver():
-    def __init__(self,finder : elementFinder):
+    def __init__(self, finder: elementFinder):
         self.finder = finder
         self.result = 0
         self.comments = None
@@ -53,7 +54,7 @@ class CVSolver():
         if count == 12:
             self.result += 2
             self.third_test()
-        elif count >= 8 :
+        elif count >= 8:
             self.result += 1
             self.comments = "Утрачена целостность часов, часть чисел отсутвует или расположена вне круга."
         else:
@@ -91,7 +92,6 @@ class CVSolver():
         if self.result != 10:
             self.finder.draw_error(self.finder.arrow_finder.arrow_contour)
                 
-   
     def find_result(self):
         self.first_test()
         return (self.finder.image, self.result, self.comments)
@@ -99,7 +99,7 @@ class CVSolver():
     def draw_sections(self):
         lines = []
         for a in self.angles:
-            lines.append([self.finder.circle[0] + self.finder.circle[2] * np.sin(np.deg2rad(a[0])),  self.finder.circle[1] -  self.finder.circle[2] * np.cos(np.deg2rad(a[0]))])
+            lines.append([self.finder.circle[0] + self.finder.circle[2] * np.sin(np.deg2rad(a[0])),  self.finder.circle[1] - self.finder.circle[2] * np.cos(np.deg2rad(a[0]))])
         lines = [[int(np.around(dot)) for dot in line] for line in lines]
         for line in lines:
             cv2.line(self.finder.image,(self.finder.circle[0],self.finder.circle[1]),(line[0],line[1]),(0,0,255),1)

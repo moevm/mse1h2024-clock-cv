@@ -71,6 +71,7 @@ class ArrowAnalizer():
         if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 > self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
             self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
 
+
         for ar in self.arrows:
             maxi = 0
             x,y = 0,0
@@ -96,6 +97,7 @@ class ArrowAnalizer():
             self.angles.append(angle_deg)
         cv2.line(self.clean_image,(circle[0] - circle[2],circle[1]), (circle[0] + circle[2],circle[1]),(0,0,255),1)
         cv2.line(self.clean_image,(circle[0], - circle[2]+circle[1]), (circle[0], circle[2] + circle[1]),(0,0,255),1)
+
         
     
     def find_time(self):
@@ -110,4 +112,19 @@ class ArrowAnalizer():
         minutes_theor = time[1] / 60 * 360
         hours_theor = (time[0] % 12) / 12 * 360 + time[1] /60 * 30
         self.error_rate = np.abs(minutes_theor - self.angles[1]) + np.abs(hours_theor - self.angles[0])
-        return self.error_rate 
+        return self.error_rate
+
+        
+    
+    def find_time(self):
+        minutes = np.floor(self.angles[1] / 360 * 60) % 60
+        hours = np.floor(self.angles[0] / 360 * 12) % 12
+        self.found_time = (hours,minutes)
+    
+    def find_error_rate(self,time):
+        if np.abs(self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 -( self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2)) <=5:
+            return -1
+        minutes_theor = time[1] / 60 * 360
+        hours_theor = (time[0] % 12) / 12 * 360 + time[1] /60 * 30
+        self.error_rate = np.abs(minutes_theor - self.angles[1]) + np.abs(hours_theor - self.angles[0])
+        return self.error_rate

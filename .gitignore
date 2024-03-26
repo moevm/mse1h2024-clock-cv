@@ -1,6 +1,6 @@
 .idea/
 .vscode/
-venv/
+clockcv-backend/venv/
 __pycache__/
 local/
 pgdata
