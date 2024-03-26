@@ -23,9 +23,9 @@ export default {
     const hourAngle = (this.hours + this.minutes/60) * 30 - 90
     const minuteAngle = this.minutes * 6 - 90
     minutesArrow.style.transformOrigin = `0 50%`
-    minutesArrow.style.transform += `translate(102%, -330%) rotate(${minuteAngle}deg)`
+    minutesArrow.style.transform += `translate(100%, -345%) rotate(${minuteAngle}deg)`
     hoursArrow.style.transformOrigin = `0 50%`
-    hoursArrow.style.transform += `translate(2%, -330%) rotate(${hourAngle}deg)`
+    hoursArrow.style.transform += `translate(0%, -345%) rotate(${hourAngle}deg)`
   }
 
 }

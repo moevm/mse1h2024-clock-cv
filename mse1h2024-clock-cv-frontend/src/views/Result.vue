@@ -1,5 +1,5 @@
 <script>
-import modal from './modal-window.vue'
+import modal from '../components/ModalWindow.vue'
 export default {
     name: 'ResultComp',
     components: {
@@ -17,7 +17,7 @@ export default {
       closeModal() {
         this.isModalVisible = false;
       }
-    },
+    }
   };
 </script>
 
@@ -29,12 +29,12 @@ export default {
         />
     </div>
     <div class="block1">
-        <router-link to="/home"><button class="repetknop">Повторить тест</button></router-link>
+        <router-link to="/loading"><button class="repetknop">Повторить тест</button></router-link>
         <button class="historyknop">История тестирований</button>
     </div>
     <div class="Rectangle1">
         <p class="text1">Имя пользователя:<br/><span class="text1">...</span></p>
-        <p class="text2">Количество баллов:<br/><span class="number"><!--Здесь количество баллов за тест--></span></p>
+        <p class="text2">Количество баллов:<br/><span class="number">{{ $store.state.result }}</span></p>
     </div>
     <div>
         <button class="detailknop" @click="showModal">Подробнее</button>
