@@ -10,7 +10,6 @@ async def cv_image_recognise(file):
     if width!=1190 or height!=699:
         return (None, None, f"Изображение неправильных размеров, требуется {1190}x{699}, полученно{width}x{height}")
 
-    # image = cv2.imread(path)
     prototype = [[] for _ in range(10)]
     for i in range(len(prototype)):
         file_list = os.listdir(f"storage/templates/{i}")
