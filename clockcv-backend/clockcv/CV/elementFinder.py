@@ -48,11 +48,24 @@ class elementFinder():
         self.number_finder.find_numbers(self.contours,self.numbers,self.gray)
      
     def find_arrows(self):
-        self.arrow_finder.start(self.gray,self.numbers,self.circle,self.contours[2])
+        self.arrow_finder.start(self.gray,self.numbers,self.circle)
               
-    def read_time(self):
-        pass
+    def draw_error(self, coord):
+        x, y, w, h = coord
+        white_value = (255, 255, 255)
+        for j in range(y, y+h):
+            for i in range(x, x+w):
+                if not np.array_equal(self.image[j, i], white_value):
+                    self.image[j, i] = (0, 0, 255)
     
+    def draw_error(self, coord):
+        x, y, w, h = coord
+        white_value = (255, 255, 255)
+        for j in range(y, y+h):
+            for i in range(x, x+w):
+                if not np.array_equal(self.image[j, i], white_value):
+                    self.image[j, i] = (0, 0, 255)
+                    
     def check_inside(self):
         count = 0
         for num in self.numbers:
