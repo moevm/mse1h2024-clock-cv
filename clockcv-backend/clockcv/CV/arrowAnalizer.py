@@ -7,7 +7,6 @@ import math
 очистить изображение от цифер                         сделано
 найти контур стрелок, затем нужно пройтись по контуру стрелок по всему и найти точку, 
 которая ближе всех к центру окружности, закрасить ее белым кругом, снова найти контуры стрелок раздельно,           сделано
-затем начать анализ
 '''
 class ArrowAnalizer():
     def __init__(self):
@@ -15,7 +14,10 @@ class ArrowAnalizer():
         self.clean_image = None
         self.found_time = None
         self.arrow_contour = None
+        self.error_rate = 0
         self.center = [0,0]
+        self.dots = []
+        self.angles = ()
             
     def clear_image(self,gray,numbers):
         self.clean_image = gray
@@ -23,11 +25,13 @@ class ArrowAnalizer():
             fill = np.full((num[3], num[2]), 255)
             self.clean_image[num[1]: num[1] + num[3], num[0] : num[0] + num[2]] = fill
     
-    def start(self,gray,numbers,circle,circle_contour):
+    def start(self,gray,numbers,circle):
         self.clear_image(gray,numbers)
         self.print_center(circle)
         self.find_arrows()
-        self.find_time(circle,circle_contour)
+        self.find_edge_dots(circle)
+        self.find_time(circle)
+        self.find_error_rate(circle)
     
     def print_center(self,circle):
         self.center = circle[:2]
@@ -56,24 +60,33 @@ class ArrowAnalizer():
             dot = cv2.boundingRect(c)
             if hierarchy[0, i, -1] == 2:
                 self.arrows.append(dot)
-                cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+                #cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+        
+    
+    def find_edge_dots(self,circle):
+        print(self.arrows)
+        if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 < self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
+            self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
+            
+        for ar in self.arrows:
+            maxi = 0
+            x,y = 0,0
+            for i in range(ar[1],ar[1] + ar[3]):
+                for j in range(ar[0],ar[0] + ar[2]):
+                    if (circle[0] - j) ** 2 + (circle[1] - i) ** 2 > maxi and self.clean_image[i,j] == 0:
+                        maxi = (circle[0] - j) ** 2 + (circle[1] - i) ** 2
+                        x,y =  j,i
+            self.dots.append((x,y))
+        #for dot in self.dots:
+            #cv2.circle(self.clean_image,dot,10,(0,0,255),3)
         cv2.imshow('cldt', self.clean_image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+           
+    def find_time(self,circle):
+        pass
     
-    def find_time(self,circle,circle_contour):
-        '''
-        1. определить краевые точки
-        
-        
-        
-        2. определить, какая стрелка часовая какая минутная
-        
-        какая краевая точка ближе к контуру круга, та минутная
-        
-        3. анализ времени
-        
-        
-        '''
+    def find_error_rate(self,circle):
+        pass
         
         
