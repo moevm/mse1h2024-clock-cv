@@ -103,14 +103,11 @@ class ArrowAnalizer():
         hours = np.floor(self.angles[0] / 360 * 12) % 12
         self.found_time = (hours,minutes)
     
+
     def find_error_rate(self,time):
         if np.abs(self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 -( self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2)) <=5:
             return -1
         minutes_theor = time[1] / 60 * 360
         hours_theor = (time[0] % 12) / 12 * 360 + time[1] /60 * 30
         self.error_rate = np.abs(minutes_theor - self.angles[1]) + np.abs(hours_theor - self.angles[0])
-        return self.error_rate
-
-
-        
-        
+        return self.error_rate 
