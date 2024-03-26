@@ -17,7 +17,7 @@ class ArrowAnalizer():
         self.error_rate = 0
         self.center = [0,0]
         self.dots = []
-        self.angles = ()
+        self.angles = []
             
     def clear_image(self,gray,numbers):
         self.clean_image = gray
@@ -30,7 +30,8 @@ class ArrowAnalizer():
         self.print_center(circle)
         self.find_arrows()
         self.find_edge_dots(circle)
-        self.find_time(circle)
+        self.find_angles(circle)
+        self.find_time()
         self.find_error_rate(circle)
     
     def print_center(self,circle):
@@ -65,7 +66,7 @@ class ArrowAnalizer():
     
     def find_edge_dots(self,circle):
         print(self.arrows)
-        if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 < self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
+        if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 > self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
             self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
             
         for ar in self.arrows:
@@ -79,12 +80,31 @@ class ArrowAnalizer():
             self.dots.append((x,y))
         #for dot in self.dots:
             #cv2.circle(self.clean_image,dot,10,(0,0,255),3)
+        
+           
+    def find_angles(self,circle):
+        A = np.array([circle[0], circle[1] - circle[2]])
+        B = np.array([circle[0], circle[1]])
+        for dot in self.dots:
+            C = np.array(dot)
+            BA = A - B
+            BC = C - B
+            angle_rad = np.arctan2(BC[1], BC[0]) - np.arctan2(BA[1], BA[0])
+            angle_deg = np.degrees(angle_rad)
+            if angle_deg < 0:
+                angle_deg += 360
+            self.angles.append(angle_deg)
+        print(self.angles)
+        cv2.line(self.clean_image,(circle[0] - circle[2],circle[1]), (circle[0] + circle[2],circle[1]),(0,0,255),1)
+        cv2.line(self.clean_image,(circle[0], - circle[2]+circle[1]), (circle[0], circle[2] + circle[1]),(0,0,255),1)
         cv2.imshow('cldt', self.clean_image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-           
-    def find_time(self,circle):
-        pass
+    
+    def find_time(self):
+        minutes = round(self.angles[1] / 360 * 60) % 60
+        hours = round(self.angles[0] / 360 * 12) % 12
+        self.found_time = (hours,minutes)
     
     def find_error_rate(self,circle):
         pass
