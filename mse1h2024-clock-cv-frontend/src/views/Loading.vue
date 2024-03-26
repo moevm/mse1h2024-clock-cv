@@ -6,6 +6,11 @@
     формате. На изображенном циферблате
     необходимо указать определенное время.
   </div>
+  <div id="error" hidden="hidden">
+    Изображение должно иметь расширение
+    <q style="quotes: '\00ab' '\00bb'">png</q>
+    и иметь такой же размер как изначальный макет!
+  </div>
   <div class="container">
     <div class="clock">
       <TheClock :hours="2" :minutes="45"></TheClock>
@@ -14,14 +19,14 @@
     </div>
     <div class="buttons">
       <input type="file" id="upload-input" ref="file"
-               v-on:change="handleFileUpload()" hidden/>
+             hidden/>
       <button class="upload-button">
         <label for="upload-input" class="download-label">
-           Загрузить
+          Загрузить
         </label>
       </button>
       <br>
-      <a href="../assets/fon1.jpg" download="sample">
+      <a href="./clock-sample.png" download="clock-sample.png">
         <button class="download-button">Скачать макет</button>
       </a>
     </div>
@@ -43,19 +48,14 @@ export default {
   components: {UploadProgress, TheClock},
   data(){
     return {
-      file: '',
-      isLoading: false
+      isLoading: false,
     }
   },
   methods: {
-    handleFileUpload(){
-      this.file = this.$refs.file.files[0]
-      document.getElementById("result-button").removeAttribute("disabled")
-    },
     submitFile(){
       this.isLoading = true
       let formData = new FormData();
-      formData.append('file', this.file);
+      formData.append('file', this.$refs.file.files[0]);
       axios.post( '/upload', formData,
         {
           headers: {
@@ -65,11 +65,48 @@ export default {
       ).then(function(res){
         store.state.result = res.data.result
         store.state.description = res.data.description
+        store.state.imageId = res.data.imageId
         router.push('/result')
       }).catch(function(error){
           console.log(error);
       });
     }
+  },
+  mounted() {
+    const fileInput = document.getElementById('upload-input');
+
+    fileInput.addEventListener('change', function() {
+      const file = fileInput.files[0];
+      if (file) {
+        if(!file.name.endsWith('.png')){
+          document.getElementById('error').removeAttribute('hidden')
+          return
+        }
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+          const img = new Image();
+          try{
+            img.src = e.target.result;
+          } catch (error){
+            document.getElementById('error').removeAttribute('hidden')
+            console.log(error)
+          }
+
+          img.onload = function() {
+            let width = img.width;
+            let height = img.height;
+            if(width !== 1190 || height !== 699){
+              document.getElementById('error').removeAttribute('hidden')
+              return
+            }
+            document.getElementById("result-button").removeAttribute("disabled")
+            document.getElementById("upload-input").setAttribute("disabled", "disabled")
+            document.getElementById('error').setAttribute('hidden', 'hidden')
+          };
+        };
+        fileReader.readAsDataURL(file);
+      }
+    });
   }
 }
 </script>
@@ -81,6 +118,18 @@ export default {
   margin-top: 4%;
   font-size: 2.5vw;
   text-align: justify;
+}
+
+#error {
+  position: absolute;
+  left: 3vw;
+  top: 33vw;
+  width: 20vw;
+  font-size: 1.5vw;
+  background-color: indianred;
+  padding: 1vw;
+  border-radius: 1vw;
+  text-align: center;
 }
 
 .container {

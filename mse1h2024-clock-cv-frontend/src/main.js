@@ -5,7 +5,7 @@ import axios from "axios";
 import store from "./store"
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = 'http://0.0.0.0:8000/';
 const app = createApp(App)
 
 app.use(store)
