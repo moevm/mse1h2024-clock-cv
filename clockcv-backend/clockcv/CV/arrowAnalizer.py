@@ -2,10 +2,91 @@ import cv2
 import numpy as np
 import sys
 import math
-
+'''
+из финдера будет подгружаться инфа о контурах,        сделано
+очистить изображение от цифер                         сделано
+найти контур стрелок, затем нужно пройтись по контуру стрелок по всему и найти точку, 
+которая ближе всех к центру окружности, закрасить ее белым кругом, снова найти контуры стрелок раздельно,           сделано
+'''
 class ArrowAnalizer():
-    def __init__(self, finder):
-        self.finder = finder 
+    def __init__(self):
+        self.arrows = []
+        self.clean_image = None
+        self.found_time = None
+        self.arrow_contour = None
+        self.error_rate = 0
+        self.center = [0,0]
+        self.dots = []
+        self.angles = ()
+            
+    def clear_image(self,gray,numbers):
+        self.clean_image = gray
+        for num in numbers:
+            fill = np.full((num[3], num[2]), 255)
+            self.clean_image[num[1]: num[1] + num[3], num[0] : num[0] + num[2]] = fill
+    
+    def start(self,gray,numbers,circle):
+        self.clear_image(gray,numbers)
+        self.print_center(circle)
+        self.find_arrows()
+        self.find_edge_dots(circle)
+        self.find_time(circle)
+        self.find_error_rate(circle)
+    
+    def print_center(self,circle):
+        self.center = circle[:2]
+        _, threshold = cv2.threshold(self.clean_image, 127, 255, 0)
+        contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours1 = []
+        for c in contours:
+            dot = cv2.boundingRect(c)
+            contours1.append(dot)  
+        for i in range(len(contours1)):
+            if hierarchy[0, i, -1] == 2:
+                self.arrow_contour = contours1[i]
+        minimum = 10000000
+        for i in range(self.arrow_contour[1], self.arrow_contour[1] + self.arrow_contour[3]):
+            for j in range(self.arrow_contour[0], self.arrow_contour[0] + self.arrow_contour[2]):
+                if np.abs(i - circle[1]) + np.abs(j - circle[0]) < minimum:
+                    self.center = [i,j]
+        fill = np.full((40, 40), 255)
+        self.clean_image[self.center[0] - 20: self.center[0] + 20, self.center[1] - 20: self.center[1] + 20] = fill
         
-    def find_time(self):
+        
+    def find_arrows(self):
+        _, threshold = cv2.threshold(self.clean_image, 127, 255, 0)
+        contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        for i, c in enumerate(contours):
+            dot = cv2.boundingRect(c)
+            if hierarchy[0, i, -1] == 2:
+                self.arrows.append(dot)
+                #cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+        
+    
+    def find_edge_dots(self,circle):
+        print(self.arrows)
+        if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 < self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
+            self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
+            
+        for ar in self.arrows:
+            maxi = 0
+            x,y = 0,0
+            for i in range(ar[1],ar[1] + ar[3]):
+                for j in range(ar[0],ar[0] + ar[2]):
+                    if (circle[0] - j) ** 2 + (circle[1] - i) ** 2 > maxi and self.clean_image[i,j] == 0:
+                        maxi = (circle[0] - j) ** 2 + (circle[1] - i) ** 2
+                        x,y =  j,i
+            self.dots.append((x,y))
+        #for dot in self.dots:
+            #cv2.circle(self.clean_image,dot,10,(0,0,255),3)
+        cv2.imshow('cldt', self.clean_image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+           
+    def find_time(self,circle):
         pass
+    
+    def find_error_rate(self,circle):
+        pass
+        
+        
