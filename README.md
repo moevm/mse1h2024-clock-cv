@@ -7,6 +7,4 @@
 
 1. Переместиться в директорию `deploy`
 2. `docker-compose -f docker-compose.dev.yml build --no-cache` - создание контейнеров
-3. `docker-compose -f docker-compose.dev.yml up --force-recreate` --remove-orphans - запуск контейнеров
-
-Примечание: Прописать свой ip в main.js с портом 8000
+3. `docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans` - запуск контейнеров
