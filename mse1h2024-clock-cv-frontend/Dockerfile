@@ -1,22 +1,13 @@
-FROM node:lts-alpine
-
-# устанавливаем простой HTTP-сервер для статики
-RUN npm install -g http-server
-
-# делаем каталог 'app' текущим рабочим каталогом
+# этап сборки (build stage)
+FROM node:lts-alpine as build-stage
 WORKDIR /app
-
-# копируем оба 'package.json' и 'package-lock.json' (если есть)
-COPY package*.json ./
-
-# устанавливаем зависимости проекта
+COPY mse1h2024-clock-cv-frontend/package*.json ./
 RUN npm install
-
-# копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
-COPY . .
-
-# собираем приложение для production с минификацией
+COPY mse1h2024-clock-cv-frontend/ .
 RUN npm run build
 
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
+# этап production (production-stage)
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
