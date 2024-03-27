@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.2
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - "./clockcv-backend/pgdata:/var/lib/postgresql/data"
+      - "./clockcv-backend/deployments/postgres/conf:/etc/postgresql/"
+
+  backend:
+    container_name: backend
+    build:
+      context: ..
+      dockerfile: clockcv-backend/deployments/app/Dockerfile
+    volumes:
+      - "../clockcv-backend/clockcv:/app/clockcv"
+      - "./clockcv-backend/storage:/app/storage"
+    env_file:
+      - dev.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ..
+      dockerfile: mse1h2024-clock-cv-frontend/Dockerfile
+    volumes:
+      - /vue_crm/node_modules
+    ports:
+      - "8080:80"

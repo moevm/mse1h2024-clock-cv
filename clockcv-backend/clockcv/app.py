@@ -4,6 +4,7 @@ import logging
 import sentry_sdk
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from sentry_sdk.integrations.fastapi import FastApiIntegration
@@ -30,6 +31,14 @@ app.middleware("http")(middlewares.request_time_middleware)
 app.middleware("http")(middlewares.request_status_middleware)
 app.middleware("http")(middlewares.request_id_middleware)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://0.0.0.0:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
 app.include_router(content_router)
 
 
@@ -56,7 +65,7 @@ if __name__ == "__main__":
     uvicorn.run(
         app="clockcv.app:app",
         host="0.0.0.0",
-        port=8080,
+        port=8000,
         reload=conf.AUTO_RELOAD,
         access_log=False,
     )

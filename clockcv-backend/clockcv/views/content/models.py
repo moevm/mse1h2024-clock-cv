@@ -8,7 +8,6 @@ class PhotoUploadStatus(StrEnum):
 
 
 class PhotoUploadResponse(BaseModel):
-    status: PhotoUploadStatus
-    image_id: str | None
+    imageId: str | None
     result: int | None
-    description: str | None
+    description: str | None | PhotoUploadStatus
