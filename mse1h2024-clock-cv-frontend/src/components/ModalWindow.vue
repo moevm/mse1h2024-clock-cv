@@ -67,7 +67,7 @@ export default {
             <p class="text5">{{ store.state.description }}</p>
             <div class="images">
               <p class="text4">Образец:</p>
-              <div class="clock"><TheClock :minutes=45 :hours=2></TheClock></div>
+              <div class="clock"><TheClock :minutes=30 :hours=9></TheClock></div>
               <p class="text4">Результат:</p>
               <img :src="imageUrl" alt="Image from FastAPI" class="image-errors"/>
             </div>
