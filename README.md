@@ -1,6 +1,8 @@
 # mse1h2024-clock-cv
 
-## Руководство по запуску:
+## Итерация 2
+
+### Руководство по запуску:
 
 Для запуска требуется [Docker](https://www.docker.com/products/docker-desktop/)
 
