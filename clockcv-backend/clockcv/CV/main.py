@@ -12,8 +12,8 @@ async def cv_image_recognise(file):
 
     prototype = [[] for _ in range(10)]
     for i in range(len(prototype)):
-        file_list = os.listdir(f"storage/templates/{i}")
+        file_list = os.listdir(f"clockcv/CV/templates/{i}")
         for name in file_list:
-            prototype[i].append(cv2.cvtColor(cv2.imread(f"storage/templates/{i}/{name}"), cv2.COLOR_BGR2GRAY))
+            prototype[i].append(cv2.cvtColor(cv2.imread(f"clockcv/CV/templates/{i}/{name}"), cv2.COLOR_BGR2GRAY))
     solver = CVSolver(elementFinder(image, prototype))
     return solver.start()
