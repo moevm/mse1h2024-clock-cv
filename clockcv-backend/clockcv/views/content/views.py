@@ -22,13 +22,10 @@ async def photo_upload(file: UploadFile):
             description=PhotoUploadStatus.file_not_image
         )
 
-    # store.state.result = res.data.result
-    # store.state.description = res.data.description
-    # store.state.imageId = res.data.imageId
     recognise_result = await cv_image_recognise(file=file)
     if (recognise_result[1]!=None):
         file_name = uuid.uuid4()
-        full_file_name = f'./storage/saved_image/{file_name}.png'
+        full_file_name = f'storage/{file_name}.png'
         cv2.imwrite(filename=full_file_name, img=recognise_result[0])
     else:
         file_name = None
@@ -37,5 +34,5 @@ async def photo_upload(file: UploadFile):
 
 @router.get("/images", response_class=FileResponse)
 async def get_photo(id: str):
-    file = f"./storage/saved_image/{id}.png"
+    file = f"storage/{id}.png"
     return FileResponse(file)
