@@ -29,7 +29,7 @@
         <div class="blockinf" style="text-align:center">
             <p class="text4">Уже есть учетная запись? <router-link to="/" class="link">Войти<br/></router-link></p>
             <p class="text4">Или используете  <router-link to="/loading" class="link"> гостевой вход<br/></router-link></p>
-            <p class="text4">Забыли пароль?<a style="color: black; font-size: 25px; font-family: Comfortaa; font-weight: 600;  word-wrap: break-word"> Восстановить пароль</a></p>   
+            <p class="text4">Забыли пароль?<router-link to="/recovery" class="link"> Восстановить пароль</router-link></p>   
         </div>
     </div>
 </template>
