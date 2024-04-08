@@ -30,7 +30,7 @@ export default {
     </div>
     <div class="block1">
         <router-link to="/loading"><button class="repetknop">Повторить тест</button></router-link>
-        <button class="historyknop">История тестирований</button>
+        <router-link to="/history"><button class="historyknop">История тестирований</button></router-link>
     </div>
     <div class="Rectangle1">
         <p class="text1">Имя пользователя:<br/><span class="text1">...</span></p>
@@ -82,7 +82,7 @@ export default {
     font-family: Comfortaa; 
     font-weight: 400; 
     word-wrap: break-word;
-    margin-top: 2.85%;
+    margin-top: 9%;
 }
 
 .historyknop:hover{
