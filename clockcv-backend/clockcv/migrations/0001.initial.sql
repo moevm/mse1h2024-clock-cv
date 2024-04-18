@@ -7,8 +7,8 @@ CREATE TABLE users (
 
 CREATE TABLE user_tests (
     id SERIAL PRIMARY KEY,
-    date TIMESTAMP DEFAULT (datetime('now','localtime')),
+    user_id INTEGER REFERENCES users(id),
     points INTEGER CHECK (points >= 1 AND points <= 10) NOT NULL ,
     description VARCHAR(100) NOT NULL ,
-    user_id INTEGER REFERENCES users(id)
+    date timestamp not null default (now() at time zone 'utc')
 );
