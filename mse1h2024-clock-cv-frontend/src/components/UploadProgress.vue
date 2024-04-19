@@ -2,58 +2,58 @@
 import {ref} from "vue";
 
 export default {
-  data() {
-    return {
-      lastActiveElement: ref(HTMLElement),
-      rootElementRef: ref(HTMLElement)
+    data() {
+        return {
+            lastActiveElement: ref(HTMLElement),
+            rootElementRef: ref(HTMLElement)
+        }
+    },
+    props: {
+        to: {
+            type: String
+        },
+        fullScreen: {
+            type: Boolean
+        },
+        shouldCatchFocus: {
+            type: Boolean
+        }
+    },
+    methods: {
+        catchFocus() {
+            this.rootElementRef.value?.focus()
+        },
+        restoreLastFocus() {
+            this.lastActiveElement.value?.focus();
+        },
+        storeLastActiveElement() {
+            this.lastActiveElement.value = document.activeElement
+        }
+    },
+    mounted() {
+        this.storeLastActiveElement();
+        if (this.shouldCatchFocus) this.catchFocus()
+    },
+    unmounted() {
+        this.restoreLastFocus()
     }
-  },
-  props: {
-    to: {
-      type: String
-    },
-    fullScreen: {
-      type: Boolean
-    },
-    shouldCatchFocus: {
-      type: Boolean
-    }
-  },
-  methods: {
-    catchFocus() {
-      this.rootElementRef.value?.focus()
-    },
-    restoreLastFocus() {
-      this.lastActiveElement.value?.focus();
-    },
-    storeLastActiveElement(){
-      this.lastActiveElement.value = document.activeElement
-    }
-  },
-  mounted() {
-    this.storeLastActiveElement();
-    if (this.shouldCatchFocus) this.catchFocus()
-  },
-  unmounted() {
-    this.restoreLastFocus()
-  }
 }
 </script>
 <template>
-  <div ref="rootElementRef" class="app-spinner app-spinner--fullscreen" tabindex="0" @focusout="catchFocus">
-    <div class="app-spinner__overlay" />
-    <div class="app-spinner__icon" />
-  </div>
+    <div ref="rootElementRef" class="app-spinner app-spinner--fullscreen" tabindex="0" @focusout="catchFocus">
+        <div class="app-spinner__overlay"/>
+        <div class="app-spinner__icon"/>
+    </div>
 </template>
 
 <style>
 .app-spinner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
 }
 
 .app-spinner:focus {
@@ -89,12 +89,12 @@ export default {
 
 
 @keyframes spinnerAnimation {
-  0% {
-    transform: translate(-50%, -50%) rotate(0);
-  }
+    0% {
+        transform: translate(-50%, -50%) rotate(0);
+    }
 
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 </style>

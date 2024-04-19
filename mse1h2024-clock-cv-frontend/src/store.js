@@ -5,7 +5,10 @@ const store = new Vuex.Store({
     state: {
         result: 0,
         description: '',
-        imageId: ''
+        imageId: '',
+        entry: false,
+        userId: '',
+        userName: ''
     }
 })
 
