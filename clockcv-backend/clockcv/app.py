@@ -38,7 +38,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
 app.include_router(content_router)
 
 

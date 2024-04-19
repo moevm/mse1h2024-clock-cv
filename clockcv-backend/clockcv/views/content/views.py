@@ -2,7 +2,8 @@ import logging
 import cv2
 from fastapi import APIRouter, UploadFile
 from fastapi.responses import FileResponse
-from .models import PhotoUploadResponse, PhotoUploadStatus, CreateUserBody, CreateUserResponse, CreateUserStatus
+from .models import PhotoUploadResponse, PhotoUploadStatus, CreateUserBody, CreateUserResponse, CreateUserStatus, \
+    CheckUserResponse, CheckUserStatus, CheckUserBody
 from clockcv.CV.main import cv_image_recognise
 import uuid
 from clockcv.state import app_state
@@ -46,6 +47,20 @@ async def create_user(body: CreateUserBody):
         return CreateUserResponse(userId=None, status=CreateUserStatus.user_already_exist)
     user = await app_state.user_repo.create_user(name=body.name, email=body.email, password=body.password)
     if user:
-        return CreateUserResponse(userId = user.id)
+        return CreateUserResponse(userId=user.id)
     else:
-        return CreateUserResponse(userId = None, status = CreateUserStatus.error)
+        return CreateUserResponse(userId=None, status=CreateUserStatus.error)
+
+
+@router.post("/entry-user")
+async def entry_user(body: CheckUserBody):
+
+    is_existed_user = await app_state.user_repo.get_user_by_email(email=body.email)
+    if not is_existed_user:
+        return CheckUserResponse(userId=None, userName=None, status=CheckUserStatus.no_user_with_this_email)
+    else:
+        password_is_correct = await app_state.user_repo.check_user_by_password(email=body.email, password=body.password)
+        if not password_is_correct:
+            return CheckUserResponse(userId=None, userName=None, status=CheckUserStatus.incorrect_password)
+        else:
+            return CheckUserResponse(userId=password_is_correct.id, userName=password_is_correct.name)
