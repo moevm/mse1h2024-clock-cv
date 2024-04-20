@@ -27,3 +27,21 @@ class CreateUserStatus(StrEnum):
 class CreateUserResponse(BaseModel):
     userId: int | None
     status: CreateUserStatus = CreateUserStatus.ok
+
+
+class CheckUserBody(BaseModel):
+    email: str
+    password: str
+
+
+class CheckUserStatus(StrEnum):
+    ok = "ok"
+    error = "error"
+    no_user_with_this_email = "no_user_with_this_email"
+    incorrect_password = "incorrect_password"
+
+
+class CheckUserResponse(BaseModel):
+    userId: int | None
+    userName: str | None
+    status: CheckUserStatus = CreateUserStatus.ok
