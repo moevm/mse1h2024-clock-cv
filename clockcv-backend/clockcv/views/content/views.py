@@ -2,9 +2,10 @@ import logging
 import cv2
 from fastapi import APIRouter, UploadFile
 from fastapi.responses import FileResponse
-from .models import PhotoUploadResponse, PhotoUploadStatus
+from .models import PhotoUploadResponse, PhotoUploadStatus, CreateUserBody, CreateUserResponse, CreateUserStatus
 from clockcv.CV.main import cv_image_recognise
 import uuid
+from clockcv.state import app_state
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -23,7 +24,7 @@ async def photo_upload(file: UploadFile):
         )
 
     recognise_result = await cv_image_recognise(file=file)
-    if (recognise_result[1]!=None):
+    if (recognise_result[1] != None):
         file_name = uuid.uuid4()
         full_file_name = f'storage/{file_name}.png'
         cv2.imwrite(filename=full_file_name, img=recognise_result[0])
@@ -36,3 +37,15 @@ async def photo_upload(file: UploadFile):
 async def get_photo(id: str):
     file = f"storage/{id}.png"
     return FileResponse(file)
+
+
+@router.post("/create-user")
+async def create_user(body: CreateUserBody):
+    is_existed_user = await app_state.user_repo.get_user_by_email(email=body.email)
+    if is_existed_user:
+        return CreateUserResponse(userId=None, status=CreateUserStatus.user_already_exist)
+    user = await app_state.user_repo.create_user(name=body.name, email=body.email, password=body.password)
+    if user:
+        return CreateUserResponse(userId = user.id)
+    else:
+        return CreateUserResponse(userId = None, status = CreateUserStatus.error)

@@ -5,6 +5,7 @@ from asyncpg import Pool, create_pool
 
 import clockcv.conf as conf
 
+from clockcv.repository.user import UserRepository
 
 class AppState:
     def __init__(self) -> None:
@@ -23,6 +24,8 @@ class AppState:
         self._db = await create_pool(
             dsn=conf.DATABASE_DSN, init=self.init_connection
         )
+        self._user_repo = UserRepository(db=self._db)
+        
     async def shutdown(self) -> None:
         if self._db:
             await self._db.close()
@@ -31,5 +34,10 @@ class AppState:
     def db(self) -> Pool:
         assert self._db
         return self._db
+
+    @property
+    def user_repo(self) -> UserRepository:
+        assert self._user_repo
+        return self._user_repo
 
 app_state = AppState()
