@@ -18,10 +18,9 @@ class elementFinder():
     def find_circle(self):
         gray_blurred = cv2.bitwise_not(cv2.GaussianBlur(self.gray, (7,7), 0)) 
         edges = cv2.Canny(gray_blurred, 50, 150, apertureSize=3)
-        circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, dp=1, minDist=4, param1=30, param2=72, minRadius=20, maxRadius=10000)
+        circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, dp=1, minDist=4, param1=90, param2=70, minRadius=20, maxRadius=10000)
         drawn_circles = [[]]
         drawn_circles[0].append(circles[0,0])
-
         if circles is not None:
             drawn_circles = circles[0, :]   
             drawn_circles = [np.array(item, dtype=int) for item in drawn_circles]
@@ -32,9 +31,9 @@ class elementFinder():
     
     def delete_circles(self):
         image = self.image.copy()
-        for y in range(self.circle[1]-self.circle[2] - 10, len(image)):
-            for x in range(self.circle[0]-self.circle[2] - 10, len(image[y])):
-                if np.array_equal(image[y, x], [255, 0, 0]):
+        for y in range(self.circle[1] - self.circle[2] - 20, len(image)):
+            for x in range(self.circle[0] - self.circle[2] - 20, len(image[y])):
+                if np.all([100, 0, 0] <= image[y, x]) and np.all(image[y, x] <= [255, 255, 150]):
                     image[y, x] = [255, 255, 255]
         return image
     
@@ -54,7 +53,7 @@ class elementFinder():
         #print(self.contours)
           
     def find_numbers(self):
-        self.number_finder.find_numbers(self.contours,self.numbers,self.gray)
+        self.number_finder.find_numbers(self.contours,self.numbers,self.gray, self.hierarchy)
    
     def find_arrows(self,time):
         return self.arrow_finder.start(self.gray,self.numbers,self.circle,time)

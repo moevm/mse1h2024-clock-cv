@@ -6,10 +6,12 @@ class NumberAnalizer():
         self.prototype = prototype 
         self.numbers =  [[] for _ in range(10)]
         
-    def find_numbers(self, contours, numbers, image):
+    def find_numbers(self, contours, numbers, image, hierarchy):
         threshold = 0.7
-        for c in contours:
-            if c[2] <=55 and c[3] <=55:
+        for j in range(len(contours)):
+            c = contours[j]
+            h = hierarchy[0][j]
+            if c[2] <=55 and c[3] <=55 and h[3]==0 and c[2] >=5 and c[3] >=5:
                 temp_image = image[c[1] : c[1]+c[3], c[0]:c[0]+c[2]]
                 temp_image = self.resize_image(temp_image)
                 list_of_matches =  [[] for _ in range(10)]
@@ -71,11 +73,12 @@ class NumberAnalizer():
                                 new_param = self.find_new_pair_parameters(coord_1,coord_2)
                                 remove_list.append((i,coord_1))
                                 remove_list.append((k,coord_2))
-                                index = int(str(i)+str(k)) - 1
-                                if index > 8 and index < 12 :
-                                    numbers[index] = new_param
-                                else:
+                                index = 0
+                                if i==1:
+                                    index = int(str(i)+str(k)) - 1
+                                elif k==1:
                                     index = int(str(k)+str(i)) - 1
+                                if index > 8 and index < 12 :
                                     numbers[index] = new_param
         for r in remove_list:
             self.numbers[r[0]].remove(r[1])
