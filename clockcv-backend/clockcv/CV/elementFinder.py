@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from .NumberAnalizer import NumberAnalizer
 from .arrowAnalizer import ArrowAnalizer
-
+import sys
 class elementFinder():
     def __init__(self,image,prototype):
         self.image = image
@@ -28,15 +28,6 @@ class elementFinder():
             self.circle = np.array(np.mean(drawn_circles, axis=0), dtype=int)
         else:
             print('Круги не найдены на изображении.')
-        self.gray = cv2.cvtColor(self.delete_circles(), cv2.COLOR_BGR2GRAY)
-    
-    def delete_circles(self):
-        image = self.image.copy()
-        for y in range(self.circle[1]-self.circle[2] - 10, len(image)):
-            for x in range(self.circle[0]-self.circle[2] - 10, len(image[y])):
-                if np.array_equal(image[y, x], [255, 0, 0]):
-                    image[y, x] = [255, 255, 255]
-        return image
     
     def find_contours(self):
         ret, threshold = cv2.threshold(self.gray, 127, 255, 0)
@@ -61,9 +52,18 @@ class elementFinder():
 
     def draw_error(self, coord):
         x, y, w, h = coord
-        for j in range(y, y + h):
-            for i in range(x, x + w):
-                if not np.array_equal(self.image[j, i],  [255, 255, 255]) and not np.array_equal(self.image[j, i],  [255, 0, 0]):
+        white_value = (255, 255, 255)
+        for j in range(y, y+h):
+            for i in range(x, x+w):
+                if not np.array_equal(self.image[j, i], white_value):
+                    self.image[j, i] = (0, 0, 255)
+    
+    def draw_error(self, coord):
+        x, y, w, h = coord
+        white_value = (255, 255, 255)
+        for j in range(y, y+h):
+            for i in range(x, x+w):
+                if not np.array_equal(self.image[j, i], white_value):
                     self.image[j, i] = (0, 0, 255)
                     
     def check_inside(self):
