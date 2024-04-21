@@ -71,6 +71,8 @@ class CVSolver():
    
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
+        print("Дальнейшее оценивание.")
+
         res = self.finder.find_arrows(self.current_time)
         if res == 100:
             self.comments = "Стрелки на изображении отсутствуют"

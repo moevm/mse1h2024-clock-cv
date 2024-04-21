@@ -1,6 +1,13 @@
 import cv2
 import numpy as np
-
+import sys
+import math
+'''
+из финдера будет подгружаться инфа о контурах,        сделано
+очистить изображение от цифер                         сделано
+найти контур стрелок, затем нужно пройтись по контуру стрелок по всему и найти точку, 
+которая ближе всех к центру окружности, закрасить ее белым кругом, снова найти контуры стрелок раздельно,           сделано
+'''
 class ArrowAnalizer():
     def __init__(self):
         self.arrows = []
@@ -53,7 +60,8 @@ class ArrowAnalizer():
                     self.center = [i,j]
         fill = np.full((40, 40), 255)
         self.clean_image[self.center[0] - 20: self.center[0] + 20, self.center[1] - 20: self.center[1] + 20] = fill
-          
+        
+        
     def find_arrows(self):
         _, threshold = cv2.threshold(self.clean_image, 127, 255, 0)
         contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -62,6 +70,9 @@ class ArrowAnalizer():
             if hierarchy[0, i, -1] == 0:
                 self.arrows.append(dot)
                 cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
+                
+        
+        
     
     def find_edge_dots(self,circle):
         cv2.imshow('',self.clean_image)
@@ -81,7 +92,8 @@ class ArrowAnalizer():
                         maxi = (circle[0] - j) ** 2 + (circle[1] - i) ** 2
                         x,y =  j,i
             self.dots.append((x,y))
-                
+        
+           
     def find_angles(self,circle):
         A = np.array([circle[0], circle[1] - circle[2]])
         B = np.array([circle[0], circle[1]])
@@ -96,6 +108,8 @@ class ArrowAnalizer():
             self.angles.append(angle_deg)
         cv2.line(self.clean_image,(circle[0] - circle[2],circle[1]), (circle[0] + circle[2],circle[1]),(0,0,255),1)
         cv2.line(self.clean_image,(circle[0], - circle[2]+circle[1]), (circle[0], circle[2] + circle[1]),(0,0,255),1)
+
+        
     
     def find_time(self):
         print(self.angles)
@@ -104,6 +118,7 @@ class ArrowAnalizer():
         self.found_time = (hours,minutes)
         print(self.found_time)
     
+
     def find_error_rate(self,time):
         if np.abs(self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 -( self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2)) <=5:
             return -1

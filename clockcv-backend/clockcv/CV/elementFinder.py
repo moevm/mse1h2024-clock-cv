@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from .NumberAnalizer import NumberAnalizer
 from .arrowAnalizer import ArrowAnalizer
-
+import sys
 class elementFinder():
     def __init__(self,image,prototype):
         self.image = image
@@ -60,9 +60,10 @@ class elementFinder():
 
     def draw_error(self, coord):
         x, y, w, h = coord
-        for j in range(y, y + h):
-            for i in range(x, x + w):
-                if not np.array_equal(self.image[j, i],  [255, 255, 255]) and not np.array_equal(self.image[j, i],  [255, 0, 0]):
+        white_value = (255, 255, 255)
+        for j in range(y, y+h):
+            for i in range(x, x+w):
+                if not np.array_equal(self.image[j, i], white_value):
                     self.image[j, i] = (0, 0, 255)
                     
     def check_inside(self):
