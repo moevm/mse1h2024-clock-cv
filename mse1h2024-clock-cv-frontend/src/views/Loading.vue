@@ -60,7 +60,10 @@ export default {
         submitFile() {
             this.isLoading = true
             let formData = new FormData();
-            formData.append('file', this.$refs.file.files[0]);
+            formData.append('file', this.$refs.file.files[0])
+            if(store.state.userId){
+                formData.append('user_id', store.state.userId)
+            }
             axios.post('/upload', formData,
                 {
                     headers: {
@@ -71,6 +74,7 @@ export default {
                 this.isLoading = false
                 if(res.data.error) {
                     this.isErrorModalShown = true
+                    this.isLoading = false
                     this.errorMessage = res.data.error
                     return
                 }
@@ -80,6 +84,7 @@ export default {
                 router.push('/result')
             }).catch( error => {
                 this.isErrorModalShown = true
+                this.isLoading = false
                 this.errorMessage = error
                 console.log(error);
             });
