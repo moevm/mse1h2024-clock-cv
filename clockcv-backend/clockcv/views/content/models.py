@@ -1,5 +1,6 @@
 from enum import StrEnum
 from pydantic import BaseModel
+from clockcv.repository.user import UserTest
 
 
 class PhotoUploadStatus(StrEnum):
@@ -24,6 +25,7 @@ class CreateUserStatus(StrEnum):
     error = "error"
     user_already_exist = "user_already_exist"
 
+
 class CreateUserResponse(BaseModel):
     userId: int | None
     status: CreateUserStatus = CreateUserStatus.ok
@@ -45,3 +47,13 @@ class CheckUserResponse(BaseModel):
     userId: int | None
     userName: str | None
     status: CheckUserStatus = CreateUserStatus.ok
+
+
+class HistoryStatus(StrEnum):
+    ok = "ok"
+    user_not_found = "user_not_found"
+
+
+class HistoryResponse(BaseModel):
+    data: list
+    status: HistoryStatus = HistoryStatus.ok
