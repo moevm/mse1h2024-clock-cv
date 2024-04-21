@@ -60,11 +60,12 @@ export default {
         submitFile() {
             this.isLoading = true
             let formData = new FormData();
+            let url ='/upload'
             formData.append('file', this.$refs.file.files[0])
             if(store.state.userId){
-                formData.append('user_id', store.state.userId)
+                url += `?user_id=${store.state.userId}`
             }
-            axios.post('/upload', formData,
+            axios.post(url, formData,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data'
