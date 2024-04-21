@@ -1,153 +1,128 @@
 <template>
-    <div class="block1">
-        <div class="dropdown">
-            <div class="Rectangle1">
-                <input type="checkbox" id="menu">
-                    <div class="-hover">
-                        <label for="menu" class="-arrow"></label>
-                    </div>
-                <div class="-list">
-                    <p>Пояснение</p>
+    <div class="container">
+        <div class="history" v-for="(item, index) in items" :key="index">
+            <div class="rectangle" >
+                <div class="data">
+                    <p>Дата теста</p>
+                    <p>{{ item.date }}</p>
                 </div>
+                <div class="data">
+                    <p>Количество баллов</p>
+                    <p>{{ item.result }}</p>
+                </div>
+
+                <img src="../assets/up.png" alt='открыть описание' @click="showDescription(index)" v-if="!item.show" style="rotate: 180deg"/>
+                <img src="../assets/up.png" alt='закрыть описание' @click="showDescription(index)" v-if="item.show"/>
+            </div>
+
+            <div class="description" v-if="item.show">
+                <p>{{ item.description }}</p>
             </div>
         </div>
-        <div class="block2">
-            <button class="grafknop">График</button>
-            <router-link to="/result"><button class="knopreturn">Вернуться назад</button></router-link>
-        </div>
+
+
     </div>
-    
+
+    <ErrorModal :show="isErrorModalShown" :errorText="errorMessage" @close="closeErrorModal"/>
 </template>
 
-<script>
-export default {
-    name: 'HistoryComp',
-}
-</script>
-
 <style scoped>
+.container {
+    margin-top: 60px;
+    margin-left: 45vw;
+}
 
-.block1{
+.history {
+    margin-top: 20px;
+    box-sizing: border-box;
+    max-width: 1047px;
     display: flex;
-    justify-content: right;
     flex-direction: column;
 }
 
-.block2{
-    display:flex;
-    flex-direction: row;
-    position: absolute;
-    bottom: 2%;
-    right: 8%;
+.rectangle {
+    width: 100%;
+    height: 148px;
+    background-color: rgba(255, 253, 253, 0.42);
+    border: 6px solid #6FD9CD;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
-.knopreturn{
-    margin-left: 10%;
+.description,
+.data {
+    font-weight: bold;
+    font-size: 40px;
     text-align: center;
-    color: black; 
-    font-size: 40px; 
-    font-family: Comfortaa; 
-    font-weight: 700; 
-    word-wrap: break-word;
-    width: 457px; 
-    height: 108px; 
-    background: #6FD9CD; 
-    border-radius: 20px; 
-    border: 6px #FFFDFD solid;
 }
 
-.grafknop{
-    width: 457px; 
-    height: 108px; 
-    background: #6FD9CD; 
-    border-radius: 20px; 
-    border: 6px #FFFDFD solid;
-    text-align: center;
-    color: black; 
-    font-size: 40px; 
-    font-family: Comfortaa; 
-    font-weight: 700; 
-    word-wrap: break-word;
+.data p{
+    margin: 0;
 }
 
-.grafknop:hover{
-    cursor: pointer;
-    background: #0991A4;
+img {
+    width: 116px;
+    height: 114px;
 }
 
-.knopreturn:hover{
-    cursor: pointer;
-    background: #0991A4;
+.description {
+    width: 100%;
+    height: 192px;
+    background-color: rgba(255, 253, 253, 0.42);
+    border-right: 6px solid #6FD9CD;
+    border-left: 6px solid #6FD9CD;
+    border-bottom: 6px solid #6FD9CD;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
-
-.Rectangle1{
-    width: 1047px; 
-    height: 148px; 
-    background: rgba(255, 252.88, 252.88, 0.42); 
-    border: 6px #6FD9CD solid;
-    
-}
-
-.dropdown {
-  display: inline-block;
-  position: relative;
-  margin-left: auto;
-    margin-right: 4%;
-    margin-top: 2%;
-}
-
-.dropdown #menu {
-  display: none;
-}
-
-.dropdown .-hover {
-  color: #fdac7a;
-}
-
-.dropdown .-hover > span {
-  text-decoration: underline dashed;
-  font-style: italic;
-}
-
-.dropdown .-arrow::after {
-  content: url("../assets/down.png");
-  zoom: 15%;
-  background-size: 100px !important;
-  width: 116px !important;
-  height: 114px !important;
-  font-size: 50%;
-  cursor: pointer;
-}
-
-.dropdown .-list {
-  display: none;
-  width: calc(100%);
-  box-shadow: 0 2px 3px rgba(0,0,0,.35);
-  padding: 5px;
-  box-sizing: border-box;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 10;
-  background: rgba(255, 252.88, 252.88, 0.42); 
-  border: 6px #6FD9CD solid;
-}
-
-.dropdown .-list p {
-  display: block;
-  color: inherit;
-}
-
-.dropdown .-list p:hover {
-  color: #fdac7a;
-}
-
-.dropdown #menu:checked ~ .-list {
-  display: block;
-}
-
-.dropdown #menu:checked ~ .-arrow::after {
-    content: url("../assets/up.png");
-}
-
 </style>
+
+<script>
+import axios from "axios";
+import store from "@/store";
+import ErrorModal from "@/components/ErrorModal.vue";
+
+export default {
+    name: 'HistoryComp',
+    components: {ErrorModal},
+    data() {
+        return {
+            items: [],
+            isErrorModalShown: false,
+            errorMessage: ''
+        };
+    },
+    methods: {
+        showDescription(index) {
+            this.items[index].show = !this.items[index].show;
+        },
+        closeErrorModal() {
+            this.isErrorModalShown = false;
+        }
+    },
+    beforeMount() {
+        const url = '/history/?id=' + store.state.userId
+        axios.get(url, {responseType: 'json'})
+            .then(res => {
+                if(res.data.status === 'ok') {
+                    this.items = res.data.data
+                    this.items.forEach(elem => {
+                        elem.show = false
+                    })
+                }
+                else {
+                    this.errorMessage = res.data.status
+                    this.isErrorModalShown = true
+                }
+
+            })
+            .catch(error => {
+                this.errorMessage = error
+                this.isErrorModalShown = true
+                console.error(error);
+            });
+    }
+};
+</script>
