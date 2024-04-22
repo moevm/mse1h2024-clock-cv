@@ -1,4 +1,4 @@
-from elementFinder import elementFinder,np
+from .elementFinder import elementFinder,np
 import cv2
 
 '''
@@ -71,8 +71,6 @@ class CVSolver():
    
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
-        print("Дальнейшее оценивание.")
-
         res = self.finder.find_arrows(self.current_time)
         if res == 100:
             self.comments = "Стрелки на изображении отсутствуют"
@@ -92,7 +90,8 @@ class CVSolver():
                 self.result +=4
                 self.comments = "Время указано верно"
         if self.result != 10 and self.finder.arrow_finder.arrow_contour:
-            self.finder.draw_error(self.finder.arrow_finder.arrow_contour)
+            if self.finder.arrow_finder.arrow_contour:
+                self.finder.draw_error(self.finder.arrow_finder.arrow_contour)
                 
     def find_result(self):
         self.first_test()

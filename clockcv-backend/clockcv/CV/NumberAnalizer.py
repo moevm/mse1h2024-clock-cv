@@ -7,11 +7,11 @@ class NumberAnalizer():
         self.numbers =  [[] for _ in range(10)]
         
     def find_numbers(self, contours, numbers, image, hierarchy):
-        threshold = 0.7
+        threshold = 0.6
         for j in range(len(contours)):
             c = contours[j]
             h = hierarchy[0][j]
-            if c[2] <=55 and c[3] <=55 and h[3]==0 and c[2] >=5 and c[3] >=5:
+            if c[2] <=95 and c[3] <=95 and h[3]==0 and c[2] >=5 and c[3] >=5:
                 temp_image = image[c[1] : c[1]+c[3], c[0]:c[0]+c[2]]
                 temp_image = self.resize_image(temp_image)
                 list_of_matches =  [[] for _ in range(10)]
@@ -57,29 +57,21 @@ class NumberAnalizer():
     
     def find_two_digit_number(self, numbers):
         remove_list = []
-        for i in range(len(self.numbers)):
-            for k in range(i, len(self.numbers)):
-                start = 0 
-                for j in range(len(self.numbers[i])):
-                    if i == k: 
-                        start = j
-                    for l in range(start, len(self.numbers[k])):
-                        coord_1 = self.numbers[i][j]
-                        coord_2 = self.numbers[k][l]
-                        if coord_1 != coord_2:
-                            dist = self.calculate_distance(self.find_center(coord_1), self.find_center(coord_2))
-                            avg_diagonal = (((coord_1[2] + coord_2[2]) / 2)**2 + ((coord_1[3] + coord_2[3]) / 2)**2) ** 0.5
-                            if dist < avg_diagonal:
-                                new_param = self.find_new_pair_parameters(coord_1,coord_2)
-                                remove_list.append((i,coord_1))
-                                remove_list.append((k,coord_2))
-                                index = 0
-                                if i==1:
-                                    index = int(str(i)+str(k)) - 1
-                                elif k==1:
-                                    index = int(str(k)+str(i)) - 1
-                                if index > 8 and index < 12 :
-                                    numbers[index] = new_param
+        for k in range(3):
+            for j in range(len(self.numbers[1])):
+                for l in range(len(self.numbers[k])):
+                    coord_1 = self.numbers[1][j]
+                    coord_2 = self.numbers[k][l]
+                    if coord_1 != coord_2 and not (1,coord_1) in remove_list and not (k,coord_2) in remove_list:
+                        dist = self.calculate_distance(self.find_center(coord_1), self.find_center(coord_2))
+                        avg_diagonal = (((coord_1[2] + coord_2[2]) / 2)**2 + ((coord_1[3] + coord_2[3]) / 2)**2) ** 0.5
+                        if dist < avg_diagonal and coord_1[0] < coord_2[0]:
+                            new_param = self.find_new_pair_parameters(coord_1,coord_2)
+                            remove_list.append((1,coord_1))
+                            remove_list.append((k,coord_2))
+                            index = int('1' + str(k)) - 1
+                            if index > 8 and index < 12 :
+                                numbers[index] = new_param
         for r in remove_list:
             self.numbers[r[0]].remove(r[1])
 
