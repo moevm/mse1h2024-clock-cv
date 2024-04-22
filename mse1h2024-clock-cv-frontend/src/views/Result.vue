@@ -33,7 +33,9 @@ export default {
         <router-link to="/loading">
             <button class="repetknop">Повторить тест</button>
         </router-link>
-        <button class="historyknop">История тестирований</button>
+        <router-link to="/history">
+            <button class="historyknop">История тестирований</button>
+        </router-link>
     </div>
     <div class="Rectangle1">
         <p class="text1">Имя пользователя:<br/><span class="text1">...</span></p>

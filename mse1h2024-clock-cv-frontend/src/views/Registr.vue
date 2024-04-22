@@ -85,8 +85,8 @@ export default {
                     }
                 }
             ).then( res => {
-                if (res.data.error) {
-                    this.errorMessage = res.data.error
+                if (res.data.status !== 'ok') {
+                    this.errorMessage = res.data.status
                     this.isErrorModalShown = true
                     return
                 }

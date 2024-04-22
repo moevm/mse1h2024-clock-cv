@@ -2,6 +2,7 @@ import logging
 
 from asyncpg import Pool
 from pydantic import BaseModel
+from datetime import datetime, date
 
 logger = logging.getLogger(__name__)
 
@@ -11,6 +12,14 @@ class User(BaseModel):
     name: str
     email: str
     password: str
+
+
+class UserTest(BaseModel):
+    id: int
+    user_id: int
+    points: int
+    description: str
+    date: datetime | date
 
 
 class UserRepository:
@@ -84,3 +93,42 @@ class UserRepository:
             return
 
         return User(**dict(row))
+
+    async def record_user_test(self, user_id: int, recognise_result: int, description: str) -> UserTest | None:
+        """
+        Создание истории
+        """
+        sql = """
+            INSERT INTO user_tests (user_id, points, description)
+            VALUES ($1, $2, $3)
+            RETURNING *
+        """
+        async with self._db.acquire() as c:
+            row = await c.fetchrow(sql, user_id, recognise_result, description)
+
+        if not row:
+            return
+
+        result = UserTest(**dict(row))
+        result.date = result.date.date()
+        return result
+
+    async def get_user_history(self, user_id: int) -> list[UserTest] | None:
+        """
+        Создание истории
+        """
+        sql = """
+        SELECT * 
+        FROM user_tests
+        WHERE user_id=$1
+        """
+        async with self._db.acquire() as c:
+            data = await c.fetch(sql, user_id)
+
+        if not data:
+            return
+
+        result = [UserTest(**dict(row)) for row in data]
+        for i in result:
+            i.date = i.date.date()
+        return result
