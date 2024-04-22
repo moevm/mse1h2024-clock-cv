@@ -12,7 +12,11 @@
             <div class="block2">
                 <button class="recoveryknop" type="submit"><p class="text1">Отправить новый пароль на почту</p></button>
             </div>
+            
         </form>
+        <div class="block3">
+            <router-link to="/"><button class="returnknop"><p class="text1">Вернуться назад</p></button></router-link>    
+        </div>
     </div>
 
     <ErrorModal :show="isErrorModalShown" :errorText="errorMessage" @close="closeErrorModal"/>
@@ -79,6 +83,12 @@ export default {
 .block2 {
     position: absolute;
     right: 10%;
+}
+
+.block3 {
+    position: absolute;
+    right: 10%;
+    bottom: 0;
 }
 
 .Rectangle2 {
@@ -163,6 +173,20 @@ export default {
 }
 
 .recoveryknop:hover {
+    cursor: pointer;
+    background: #0991A4;
+}
+
+.returnknop {
+    width: 780px;
+    height: 140px;
+    background: #6FD9CD;
+    border-radius: 20px;
+    border: 6px #FFFDFD solid;
+    text-align: center;
+}
+
+.returnknop:hover {
     cursor: pointer;
     background: #0991A4;
 }
