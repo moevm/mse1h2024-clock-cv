@@ -99,7 +99,7 @@ class CVSolver():
         self.first_test()
         a = self.finder.arrows
         for u in self.finder.useless:
-            if a and abs((a[0]-u[0])+(a[1]-u[1])+(a[2]-u[2])+(a[3]-u[3])) < 20:
+            if a and (abs(a[0]-u[0]) + abs(a[1]-u[1]) + abs(a[2]-u[2]) + abs(a[3]-u[3])) < 20:
                 self.finder.draw_error(u)
         return (self.finder.image, self.result, self.comments)
     
