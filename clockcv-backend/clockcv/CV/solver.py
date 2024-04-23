@@ -95,6 +95,8 @@ class CVSolver():
                 
     def find_result(self):
         self.first_test()
+        for u in self.finder.useless:
+            self.finder.draw_error(u)
         return (self.finder.image, self.result, self.comments)
     
     def draw_sections(self):

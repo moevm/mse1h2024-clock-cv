@@ -1,12 +1,14 @@
 import cv2
 import numpy as np
+import random
+import string
 
 class NumberAnalizer():
     def __init__(self, prototype):
         self.prototype = prototype 
         self.numbers =  [[] for _ in range(10)]
         
-    def find_numbers(self, contours, numbers, image, hierarchy):
+    def find_numbers(self, contours, numbers, image, hierarchy, useless):
         threshold = 0.6
         for j in range(len(contours)):
             c = contours[j]
@@ -24,11 +26,19 @@ class NumberAnalizer():
                 found_number = self.find_max_match_index(list_of_matches)
                 if found_number!= None:
                     self.numbers[found_number].append(c)
+                else:
+                    # self.save_template(image[c[1] : c[1]+c[3], c[0]:c[0]+c[2]])
+                    useless.append(c)
         self.find_two_digit_number(numbers)
         for i in range (len(self.numbers)):
             if len(self.numbers[i]) > 0:
                 numbers[i-1] = self.numbers[i].pop(0)
-        
+    
+    def save_template(self,image):
+        image = cv2.resize(image, (15, 21))
+        random_name = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+        cv2.imwrite(f'not_recognized/{random_name}.png', image) 
+    
     def resize_image(self,image):
         image = cv2.resize(image, (15, 21))
         image = cv2.copyMakeBorder(image, 5, 5, 5, 5, cv2.BORDER_CONSTANT, value= (255, 255, 255))

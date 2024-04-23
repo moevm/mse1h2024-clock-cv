@@ -14,6 +14,7 @@ class elementFinder():
         self.circle = None
         self.contours = []
         self.hierarchy = np.array([])
+        self.useless = []
     
     def find_circle(self):
         gray_blurred = cv2.bitwise_not(cv2.GaussianBlur(self.gray, (7,7), 0)) 
@@ -55,7 +56,7 @@ class elementFinder():
             self.contours.append(dot)
           
     def find_numbers(self):
-        self.number_finder.find_numbers(self.contours,self.numbers,self.gray, self.hierarchy)
+        self.number_finder.find_numbers(self.contours,self.numbers,self.gray, self.hierarchy, self.useless)
    
     def find_arrows(self,time):
         return self.arrow_finder.start(self.gray,self.numbers,self.circle,time)
