@@ -7,7 +7,7 @@ class elementFinder():
     def __init__(self,image,prototype):
         self.image = image
         self.gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-        self.arrows = []
+        self.arrows = None
         self.number_finder = NumberAnalizer(prototype)
         self.arrow_finder = ArrowAnalizer()
         self.numbers = [None for _ in range(12)]

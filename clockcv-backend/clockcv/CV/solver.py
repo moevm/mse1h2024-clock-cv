@@ -72,6 +72,8 @@ class CVSolver():
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
         res = self.finder.find_arrows(self.current_time)
+        if len(self.finder.arrow_finder.arrows) == 2:
+            self.finder.arrows = self.finder.number_finder.find_new_pair_parameters(*self.finder.arrow_finder.arrows)
         if res == 100:
             self.comments = "Стрелки на изображении отсутствуют"
         elif res == -1 or res >= 60:
@@ -95,8 +97,10 @@ class CVSolver():
                 
     def find_result(self):
         self.first_test()
+        a = self.finder.arrows
         for u in self.finder.useless:
-            self.finder.draw_error(u)
+            if a and abs((a[0]-u[0])+(a[1]-u[1])+(a[2]-u[2])+(a[3]-u[3])) < 20:
+                self.finder.draw_error(u)
         return (self.finder.image, self.result, self.comments)
     
     def draw_sections(self):
