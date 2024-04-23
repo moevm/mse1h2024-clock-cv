@@ -1,10 +1,14 @@
 <template>
-    <span class="close" @click="closeModal">×</span>
-    <Bar
-        id="my-chart-id"
-        :options="chartOptions"
-        :data="chartData"
-    />
+    <div class="modalchart"> 
+        <span class="close" @click="closeModal"><img src="../assets/close.png" class="closeknop"></span>
+            <div class="context">
+            <Bar
+                id="my-chart-id"
+                :options="chartOptions"
+                :data="chartData"
+            />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -35,7 +39,7 @@ export default {
     },
     beforeMount() {
         this.chartData.labels = this.arr.map(elem => elem.date)
-        this.chartData.datasets = [{ data: this.arr.map(elem => elem.points)}]
+        this.chartData.datasets = [{ label: "Количество баллов",backgroundColor: '#6FD9CD', data: this.arr.map(elem => elem.points)}]
     },
     methods: {
         closeModal() {
@@ -44,3 +48,31 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.modalchart{
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 5%;
+    top: 2%;
+    width: 90%;
+    height: 95%;
+    overflow: auto;
+    background-color: #fefefe;
+    border: 6px solid #6FD9CD;
+}
+
+.context{
+    width: 90%;
+    height: 89%;
+    margin: auto auto;
+}
+
+.closeknop {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+
+</style>
