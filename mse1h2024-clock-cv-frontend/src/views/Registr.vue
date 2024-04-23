@@ -32,7 +32,7 @@
                 <router-link to="/" class="link">Войти<br/></router-link>
             </p>
             <p class="text4">Или используете
-                <router-link to="/loading" class="link"> гостевой вход<br/></router-link>
+                <router-link to="/loading" class="link" @click="setEntry"> гостевой вход<br/></router-link>
             </p>
             <p class="text4">Забыли пароль?
                 <router-link to="/recovery" class="link"> Восстановить пароль</router-link>
@@ -45,8 +45,8 @@
 
 <script>
 import axios from "axios";
-import store from "@/store";
-import router from "@/router";
+import store from "@/js/store";
+import router from "@/js/router";
 import ErrorModal from '../components/ErrorModal.vue';
 
 export default {
@@ -66,6 +66,11 @@ export default {
     },
     methods: {
         submitForm() {
+            if (this.name.length === 0 || this.email.length === 0 || this.password.length === 0 || this.passwordConfirmation.length === 0) {
+                this.errorMessage = 'Заполните все поля!'
+                this.isErrorModalShown = true
+                return
+            }
             if (this.password !== this.passwordConfirmation) {
                 this.errorMessage = 'пароли не совпадают'
                 this.isErrorModalShown = true
@@ -102,7 +107,11 @@ export default {
         },
 
         closeErrorModal() {
-            this.isErrorModalShown = false;
+            this.isErrorModalShown = false
+        },
+
+        setEntry() {
+            store.state.entry = true
         }
     }
 }

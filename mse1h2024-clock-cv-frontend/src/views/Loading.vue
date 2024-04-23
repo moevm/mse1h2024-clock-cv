@@ -5,6 +5,7 @@
         общепринятой картине часов в 12-часовом
         формате. На циферблате
         необходимо указать определенное время - 9:30.
+        Цифры должны быть такими же, как на образце.
     </div>
     <div id="error" hidden="hidden">
         Изображение должно иметь расширение
@@ -41,8 +42,8 @@
 <script>
 import axios from "axios"
 import TheClock from "@/components/TheClock.vue";
-import store from "@/store";
-import router from "@/router";
+import store from "@/js/store";
+import router from "@/js/router";
 import UploadProgress from "@/components/UploadProgress.vue";
 import ErrorModal from "@/components/ErrorModal.vue";
 
@@ -139,7 +140,7 @@ export default {
     width: 65vw;
     margin-left: 28vw;
     margin-top: 4%;
-    font-size: 2.5vw;
+    font-size: 2.2vw;
     text-align: justify;
 }
 

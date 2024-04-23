@@ -1,7 +1,7 @@
 <script>
 import axios from "axios";
 import TheClock from "@/components/TheClock.vue";
-import store from "@/store";
+import store from "@/js/store";
 
 export default {
     name: 'ModalWindow',

@@ -25,7 +25,7 @@
                 <router-link to="/registr" class="link">Зарегистрироваться<br/></router-link>
             </p>
             <p class="text4">Или используете
-                <router-link to="/loading" class="link"> гостевой вход<br/></router-link>
+                <router-link to="/loading" class="link" @click="setEntry"> гостевой вход<br/></router-link>
             </p>
             <p class="text4">Забыли пароль?
                 <router-link to="/recovery" class="link"> Восстановить пароль</router-link>
@@ -39,8 +39,8 @@
 <script>
 import ErrorModal from "@/components/ErrorModal.vue";
 import axios from "axios";
-import store from "@/store";
-import router from "@/router";
+import store from "@/js/store";
+import router from "@/js/router";
 
 export default {
     name: 'LoginComp',
@@ -55,6 +55,11 @@ export default {
     },
     methods: {
         submitForm() {
+            if(this.email.length === 0 || this.password.length === 0){
+                this.errorMessage = 'Заполните все поля!'
+                this.isErrorModalShown = true
+                return
+            }
             const formData = {
                 email: this.email,
                 password: this.password
@@ -85,6 +90,10 @@ export default {
 
         closeErrorModal() {
             this.isErrorModalShown = false;
+        },
+
+        setEntry() {
+            store.state.entry = true
         }
     }
 }

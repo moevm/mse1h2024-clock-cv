@@ -1,8 +1,14 @@
 <script>
 import modal from '../components/ModalWindow.vue'
+import store from "../js/store";
 
 export default {
     name: 'ResultComp',
+    computed: {
+        store() {
+            return store
+        }
+    },
     components: {
         modal,
     },
@@ -38,13 +44,17 @@ export default {
             </div>
             <div>
                 <router-link to="/history">
-                    <button class="historyknop">История тестирований</button>
+                    <button class="historyknop" :disabled="store.state.userName.length===0">История тестирований</button>
                 </router-link>
             </div>    
         </div>
         <div class="Rectangle1">
-            <p class="text1">Имя пользователя:<br/><span class="text1">...</span></p>
-            <p class="text2">Количество баллов:<br/><span class="number">{{ $store.state.result }}</span></p>
+            <p class="text1">Имя пользователя:<br/>
+                <span class="text1">
+                    {{(store.state.userName.length > 0)?store.state.userName:'...'}}
+                </span>
+            </p>
+            <p class="text2">Количество баллов:<br/><span class="number">{{ store.state.result }}</span></p>
         </div>
         <div class="block2">
             <button class="detailknop" @click="showModal">Подробнее</button>

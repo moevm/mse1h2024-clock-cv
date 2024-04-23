@@ -25,7 +25,7 @@
 <script>
 import ErrorModal from "@/components/ErrorModal.vue";
 import axios from "axios";
-import router from "@/router";
+import router from "@/js/router";
 
 export default {
     name: 'RecoveryComp',
@@ -39,6 +39,11 @@ export default {
     },
     methods: {
         submitForm() {
+            if (this.email.length === 0){
+                this.errorMessage = 'Заполните поле'
+                this.isErrorModalShown = true
+                return
+            }
             const formData = {
                 email: this.email,
             }
