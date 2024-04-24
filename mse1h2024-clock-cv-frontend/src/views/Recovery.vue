@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="Rectangle3">
-                <input id="emailInput" type="email" class="Input" placeholder="Введите адрес эл. почты">
+                <input id="emailInput" type="email" class="Input" placeholder="Введите адрес эл. почты" v-model="email">
             </div>
             <div class="block2">
                 <button class="recoveryknop" type="submit"><p class="text1">Отправить новый пароль на почту</p></button>

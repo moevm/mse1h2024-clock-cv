@@ -18,6 +18,7 @@ const routes = [
     { path: '/recovery', name: 'Recovery', component: Recovery},
 ]
 
+const paths = ['/', '/loading', '/result', '/registr', '/history', '/recovery']
 const allowedRoutes = ['/', '/registr', '/recovery']; // список разрешенных маршрутов
 
 const router = createRouter({
@@ -28,6 +29,8 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
+    if(!paths.includes(to.path))
+        return
     if (allowedRoutes.includes(to.path) || store.state.entry) {
         next(); // разрешаем переход на заданный маршрут
     } else {

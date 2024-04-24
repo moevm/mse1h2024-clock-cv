@@ -22,7 +22,10 @@
 
         <div class="buttons">
             <button @click="showBarChart">График</button>
-            <router-link to="/result">
+            <router-link to="/result" v-if="$store.state.imageId.length !== 0">
+                <button>Вернуться назад</button>
+            </router-link>
+            <router-link to="/loading" v-else>
                 <button>Вернуться назад</button>
             </router-link>
         </div>
