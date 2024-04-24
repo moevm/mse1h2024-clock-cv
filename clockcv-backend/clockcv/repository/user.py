@@ -132,3 +132,21 @@ class UserRepository:
         for i in result:
             i.date = i.date.date()
         return result
+
+    async def update_user_password(self, email: str, password: str) -> User | None:
+        """
+        Создание истории
+        """
+        sql = """
+            UPDATE "users"
+            SET password = $2
+            WHERE email = $1
+            RETURNING *
+        """
+        async with self._db.acquire() as c:
+            row = await c.fetchrow(sql, email, password)
+
+        if not row:
+            return
+
+        return User(**dict(row))

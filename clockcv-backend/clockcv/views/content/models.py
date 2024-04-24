@@ -57,3 +57,13 @@ class HistoryStatus(StrEnum):
 class HistoryResponse(BaseModel):
     data: list
     status: HistoryStatus = HistoryStatus.ok
+
+
+class RecoverPasswordStatus(StrEnum):
+    ok = "ok"
+    email_not_found = "email_not_found"
+    sending_error = "sending_error"
+
+
+class RecoverPasswordResponse(BaseModel):
+    status: RecoverPasswordStatus = RecoverPasswordStatus.ok
