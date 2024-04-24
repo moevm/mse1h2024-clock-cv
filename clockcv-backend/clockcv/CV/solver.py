@@ -25,7 +25,7 @@ class CVSolver():
         self.finder = finder
         self.result = 0
         self.comments = None
-        self.current_time = (3,0)
+        self.current_time = (9,30)
         self.angles = [(15,45),(45,75),(75,105),(105,135),(135,165),(165,195),(195,225),(225,255),(255,285),(285,315),(315,345),(345,375)] # углы границы для расположения чисел циферблата
         
     def start(self):
