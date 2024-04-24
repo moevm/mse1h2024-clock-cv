@@ -1,4 +1,4 @@
-from .elementFinder import elementFinder,np,sys
+from .elementFinder import elementFinder,np
 import cv2
 
 '''
@@ -8,11 +8,11 @@ import cv2
 3 - есть почти все числа, но они все вне круга
 4 - есть почти все числа, большая часть чисел расположена внутри круга
 5 - все числа есть внутри круга, но не все из них расположены в своих секторах - есть все числа
-6 - все числа в своих секторах(1 - 2 могут быть рядом), но стрелок нет или есть какие-то лишние отметки на времени(обведено время в круг), погрешность времени больше 60 градусов
-7 - стрелки есть, но они показывают совершенно неправильное время от 30 до 60 градусов погрешности
-8 - время почти верное, но погрешность двух стрелок в сумме от 21 до 30 секторов
-9 - время почти верное, но погрешность стрелок в сумме от 11 до 20 градусов
-10 - время верное, погрешность до 10 градусов в сумме
+6 - все числа в своих секторах(1 - 2 могут быть рядом), но стрелок нет или есть какие-то лишние отметки на времени(обведено время в круг), погрешность времени больше 60 градусов или стрелки отсутствуют
+7 - стрелки есть, но они показывают совершенно неправильное время от 40 до 60 градусов погрешности
+8 - время почти верное, но погрешность двух стрелок в сумме от 30 до 40 секторов
+9 - время почти верное, но погрешность стрелок в сумме от 20 до 30 градусов
+10 - время верное, погрешность до 20 градусов в сумме
 
 1. Посчитать сколько чисел есть(2-3 балла)
 2. Определить, все ли числа находятся внутри круга(4 балла) 
@@ -25,7 +25,7 @@ class CVSolver():
         self.finder = finder
         self.result = 0
         self.comments = None
-        self.current_time = (21,30)
+        self.current_time = (9,30)
         self.angles = [(15,45),(45,75),(75,105),(105,135),(135,165),(165,195),(195,225),(225,255),(255,285),(285,315),(315,345),(345,375)] # углы границы для расположения чисел циферблата
         
     def start(self):
@@ -71,29 +71,39 @@ class CVSolver():
    
     #определение погрешности  времени показания стрелок
     def fourth_test(self):
-        print("Дальнейшее оценивание.")
-
         res = self.finder.find_arrows(self.current_time)
-        if res == -1 or res >= 60:
+        if len(self.finder.arrow_finder.arrows) == 2:
+            self.finder.arrows = self.finder.number_finder.find_new_pair_parameters(*self.finder.arrow_finder.arrows)
+        if res == 100:
+            self.comments = "Стрелки на изображении отсутствуют"
+        elif res == -1 or res >= 60:
             self.comments = "Стрелки не выполняют свою функцию: они одинаковые или указанное время далеко от нужного"
         else:
-            if res < 60 and res >=30:
+            if res < 60 and res >40:
                 self.result += 1
                 self.comments = "Стрелки показывают совершенно неправильное время"
-            elif res < 30 and res >= 20:
+            elif res < 40 and res > 30:
                 self.result += 2
                 self.comments = "Заметные ошибки в расположении стрелок"
-            elif res < 20 and res >=10:
+            elif res < 30 and res > 20:
                 self.result += 3
                 self.comments = "Незначительные ошибки в расположении стрелок"
             else:
                 self.result +=4
                 self.comments = "Время указано верно"
-        if self.result != 10:
-            self.finder.draw_error(self.finder.arrow_finder.arrow_contour)
+        if self.result != 10 and self.finder.arrow_finder.arrow_contour:
+            for c in self.finder.arrow_finder.arrow_contour:
+                self.finder.draw_error(c)
                 
     def find_result(self):
         self.first_test()
+        a = self.finder.arrows
+        for u in self.finder.useless:
+            if a :
+                if (abs(a[0]-u[0]) + abs(a[1]-u[1]) + abs(a[2]-u[2]) + abs(a[3]-u[3])) > 20:
+                    self.finder.draw_error(u)
+            else:
+                self.finder.draw_error(u)
         return (self.finder.image, self.result, self.comments)
     
     def draw_sections(self):
