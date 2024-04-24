@@ -33,7 +33,12 @@
         </div>
     </div>
     <br>
-    <button id="result-button" disabled v-on:click="submitFile()">Результат</button>
+    <div class="flex-buttons">
+        <button id="result-button" disabled v-on:click="submitFile()">Результат</button>
+        <router-link to="/history" v-if="$store.state.userName.length > 0">
+            <button>История</button>
+        </router-link>
+    </div>
 
     <UploadProgress v-if="isLoading"></UploadProgress>
     <ErrorModal :show="isErrorModalShown" :errorText="errorMessage" @close="closeErrorModal"/>
@@ -136,6 +141,18 @@ export default {
 </script>
 
 <style scoped>
+.flex-buttons {
+    display: flex;
+    justify-content: center;
+    width: 62vw;
+    margin-left: 30vw;
+    margin-top: 1vw;
+}
+
+.flex-buttons button {
+    margin-left: 1vw;
+}
+
 .explanation {
     width: 65vw;
     margin-left: 28vw;
@@ -193,12 +210,6 @@ export default {
 
 .download-button {
     margin-top: 5.42vw;
-}
-
-#result-button {
-    margin-top: 0.22vw;
-    margin-left: 45.44vw;
-    font-weight: 700;
 }
 
 button {
