@@ -92,8 +92,8 @@ class CVSolver():
                 self.result +=4
                 self.comments = "Время указано верно"
         if self.result != 10 and self.finder.arrow_finder.arrow_contour:
-            if self.finder.arrow_finder.arrow_contour:
-                self.finder.draw_error(self.finder.arrow_finder.arrow_contour)
+            for c in self.finder.arrow_finder.arrow_contour:
+                self.finder.draw_error(c)
                 
     def find_result(self):
         self.first_test()
