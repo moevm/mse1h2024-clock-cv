@@ -144,7 +144,6 @@ async def recover_password(body: RecoverPasswordBody):
     </head>
     <body>
 
-
     <div class="container">
         <h1>Восстановление пароля</h1>
         <h3>Мы получили запрос на изменение пароля от вашей учетной записи.</h3>
