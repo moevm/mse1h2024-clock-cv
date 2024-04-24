@@ -14,9 +14,9 @@ export default {
 #app {
   font-family: "Comfortaa", sans-serif;
 }
-body{
-      background-image: url('./assets/fon1.jpg');
-      background-repeat: no-repeat;
-      background-size: 100%;
-    }
+body {
+    background-image: url('./assets/fon1.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
 </style>
