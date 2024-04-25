@@ -17,9 +17,9 @@
 
 
 1. Переместиться в директорию deploy
-2. docker-compose -f docker-compose.dev.yml build --no-cache - создание контейнеров.
-3. docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans - запуск контейнеров(может не собраться с 1-го раза из-за большого количества файлов (зависимостей), так что следует несколько раз его запускать при возникновении ошибок).
-4. После того, как увидите в терминале строку backend   | INFO:     Application startup complete., перейдите по ссылке "http://localhost:8080" в своем браузере, чтобы открыть веб-интерфейс приложения.
+2. `docker-compose -f docker-compose.dev.yml build --no-cache` - создание контейнеров.
+3. `docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans` - запуск контейнеров(может не собраться с 1-го раза из-за большого количества файлов (зависимостей), так что следует несколько раз его запускать при возникновении ошибок).
+4. После того, как увидите в терминале строку `backend   | INFO:     Application startup complete.`, перейдите по ссылке "http://localhost:8080" в своем браузере, чтобы открыть веб-интерфейс приложения.
 
 ### Инструкция по использованию приложения:
 
