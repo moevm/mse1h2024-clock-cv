@@ -2,18 +2,24 @@
 
 ## Итерация 2
 
+### [Презентация итогов 2-oй итерации](https://github.com/moevm/mse1h2024-clock-cv/blob/pres/presentation/2.pdf)
+### [Запись экрана с демонстрацией работы приложения](https://disk.yandex.ru/i/e3DCrIg64epaPw)
+
+
+## Итерация 3
+
+### [Презентация итогов 3-oй итерации](https://github.com/moevm/mse1h2024-clock-cv/blob/pres/3.pdf)
+### [Запись экрана с демонстрацией работы приложения](https://disk.yandex.ru/i/aIh6jxcVMF2kIg)
+
 ### Руководство по запуску:
 
 Для запуска требуется [Docker](https://www.docker.com/products/docker-desktop/)
 
 
-1. Переместиться в директорию `deploy`
-2. `docker-compose -f docker-compose.dev.yml build --no-cache` - создание контейнеров
-3. `docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans` - запуск контейнеров
-4. Перейдите по ссылке "http://localhost:8080" в своем браузере, чтобы открыть веб-интерфейс приложения.
-
-### [Презентация итогов 2-oй итерации](https://github.com/moevm/mse1h2024-clock-cv/blob/pres/presentation/2.pdf)
-### [Запись экрана с демонстрацией работы приложения](https://disk.yandex.ru/i/e3DCrIg64epaPw)
+1. Переместиться в директорию deploy
+2. `docker-compose -f docker-compose.dev.yml build --no-cache` - создание контейнеров.
+3. `docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans` - запуск контейнеров(может не собраться с 1-го раза из-за большого количества файлов (зависимостей), так что следует несколько раз его запускать при возникновении ошибок).
+4. После того, как увидите в терминале строку `backend   | INFO:     Application startup complete.`, перейдите по ссылке "http://localhost:8080" в своем браузере, чтобы открыть веб-интерфейс приложения.
 
 ### Инструкция по использованию приложения:
 
