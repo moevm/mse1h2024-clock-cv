@@ -111,40 +111,40 @@ export default {
     width: 80%;
     margin-left: auto;
     margin-right: 0;
-    height: 111px;
+    height: 15vh;
     background: linear-gradient(90deg, rgba(217, 242, 239, 0.15) 8%, #EDFDFB 42%, rgba(245.52, 251.43, 251.81, 0.67) 66%, #F6FBFC 95%);
 }
 
 .Rectangle2 {
-    width: 697px;
-    height: 117px;
+    width: 36vw;
+    height: 12.5vh;
     background: #FFFDFD;
     margin-left: auto;
-    margin-right: 4%;
-    margin-top: 7%;
+    margin-right: 4vw;
+    margin-top: 7vh;
 }
 
 .Rectangle3 {
-    width: 697px;
-    height: 117px;
+    width: 36vw;
+    height: 12.5vh;
     background: #FFFDFD;
     margin-left: auto;
-    margin-right: 4%;
-    margin-top: 1.5%;
+    margin-right: 4vw;
+    margin-top: 1.5vh;
 }
 
 .Rectangle4 {
-    width: 671px;
-    height: 90px;
+    width: 34.6vw;
+    height: 10vh;
     background: rgba(217, 217, 217, 0);
-    border: 5px #6FD9CD solid;
+    border: 0.3vw #6FD9CD solid;
     transform: translate(1.2%, 7%);
 }
 
 .text1 {
     text-align: right;
     color: black;
-    font-size: 40px;
+    font-size: 2.2vw;
     font-weight: 400;
     word-wrap: break-word;
     margin: 2% 4% -2%;
@@ -153,40 +153,40 @@ export default {
 .text2 {
     text-align: right;
     color: black;
-    font-size: 40px;
+    font-size: 2.2vw;
     font-weight: 400;
     word-wrap: break-word;
-    margin-right: 4%;
+    margin-right: 4vw;
 }
 
 .text3 {
     color: black;
-    font-size: 60px;
+    font-size: 3vw;
     font-weight: 700;
     word-wrap: break-word;
     text-align: left;
-    margin-top: 1%;
-    margin-left: 2%;
+    margin-top: 1vh;
+    margin-left: 2vw;
 }
 
 .text4 {
     color: black;
-    font-size: 25px;
+    font-size: 1.2vw;
     font-weight: 400;
     word-wrap: break-word;
-    margin-bottom: -1%;
+    margin-bottom: -1vh;
     position: relative;
-    left: 28%;
+    left: 28vw;
 }
 
 
 .Input {
     color: rgba(0, 0, 0, 0.35);
-    font-size: 60px;
+    font-size: 3vw;
     font-weight: 400;
     word-wrap: break-word;
-    width: 690px;
-    height: 110px;
+    width: 36vw;
+    height: 12.5vh;
     border: none;
 }
 
@@ -207,17 +207,17 @@ export default {
 }
 
 .loginknop {
-    width: 697px;
-    height: 108px;
+    width: 36vw;
+    height: 12vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
-    margin-top: 1%;
+    border-radius: 1.32vw;
+    border: 0.52vw #FFFDFD solid;
+    margin-top: 1vh;
     float: right;
-    margin-right: 4%;
+    margin-right: 4vw;
     text-align: center;
     color: black;
-    font-size: 60px;
+    font-size: 2.64vw;
     font-weight: 400;
     word-wrap: break-word;
     font-family: Comfortaa;
@@ -230,7 +230,7 @@ export default {
 
 .link {
     color: black;
-    font-size: 25px;
+    font-size: 1.2vw;
     font-family: Comfortaa;
     font-weight: 600;
     word-wrap: break-word;
