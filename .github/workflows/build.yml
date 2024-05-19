@@ -16,6 +16,7 @@ jobs:
           docker-compose -f docker-compose.dev.yml build --no-cache
       - name: Run docker-compose
         run: |
+          cd deploy
           docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans
           sleep 10
       - name: Run tests
