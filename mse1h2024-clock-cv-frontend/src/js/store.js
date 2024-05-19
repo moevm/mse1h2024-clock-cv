@@ -8,7 +8,9 @@ const store = new Vuex.Store({
         imageId: '',
         entry: false,
         userId: '',
-        userName: ''
+        userName: '',
+        randomHours: 0,
+        randomMinutes: 0,
     }
 })
 

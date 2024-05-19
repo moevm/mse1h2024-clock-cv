@@ -4,7 +4,7 @@
         расположить на нем цифры согласно
         общепринятой картине часов в 12-часовом
         формате. На циферблате
-        необходимо указать определенное время - 9:30.
+        необходимо указать определенное время - {{ store.state.randomHours }}:{{ store.state.randomMinutes }}.
         Цифры должны быть такими же, как на образце.
     </div>
     <div id="error" hidden="hidden">
@@ -14,7 +14,7 @@
     </div>
     <div class="container">
         <div class="clock">
-            <TheClock :hours="9" :minutes="30"></TheClock>
+            <TheClock :hours="store.state.randomHours" :minutes="store.state.randomMinutes"></TheClock>
             <br>
             <span class="clock-text">Образец полученного циферблата</span>
         </div>
@@ -54,6 +54,11 @@ import ErrorModal from "@/components/ErrorModal.vue";
 
 export default {
     name: 'LoadingPage',
+    computed: {
+        store() {
+            return store
+        }
+    },
     components: {ErrorModal, UploadProgress, TheClock},
     data() {
         return {
@@ -68,6 +73,8 @@ export default {
             let formData = new FormData();
             let url ='/upload'
             formData.append('file', this.$refs.file.files[0])
+            formData.append('hours', store.state.randomHours)
+            formData.append('minutes', store.state.randomMinutes)
             if(store.state.userId){
                 url += `?user_id=${store.state.userId}`
             }
@@ -100,6 +107,10 @@ export default {
         closeErrorModal() {
             this.isErrorModalShown = false;
         }
+    },
+    beforeMount() {
+      store.state.randomHours = Math.floor(Math.random() * (12)) + 1
+      store.state.randomMinutes = Math.floor(Math.random() * (59 + 1))
     },
     mounted() {
         const fileInput = document.getElementById('upload-input');
