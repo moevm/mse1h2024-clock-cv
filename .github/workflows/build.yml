@@ -1,0 +1,24 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build system images (non-pulling)
+        run: |
+          # build base image
+          cd deploy
+          docker-compose -f docker-compose.dev.yml build --no-cache
+      - name: Run docker-compose
+        run: |
+          docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans
+          sleep 10
+      - name: Run tests
+        run: |
+          curl http://localhost:8080
+          curl http://localhost:8000
