@@ -11,8 +11,8 @@
                     <p>{{ item.points }}</p>
                 </div>
 
-                <img src="../assets/up.png" alt='открыть описание' @click="showDescription(index)" v-if="!item.show" style="rotate: 180deg"/>
-                <img src="../assets/up.png" alt='закрыть описание' @click="showDescription(index)" v-if="item.show"/>
+                <img src="../assets/up.png" alt='открыть описание' @click="showDescription(index)" v-if="!item.show" style="rotate: 180deg; cursor: pointer"/>
+                <img src="../assets/up.png" alt='закрыть описание' @click="showDescription(index)" v-if="item.show" style="cursor: pointer"/>
             </div>
 
             <div class="description" v-if="item.show">
@@ -48,7 +48,7 @@ export default {
     components: {BarChart, ErrorModal},
     data() {
         return {
-            items: [],
+            items:  [],
             isErrorModalShown: false,
             errorMessage: '',
             isBarChartShown: false
@@ -96,23 +96,23 @@ export default {
 
 <style scoped>
 .container {
-    margin-top: 60px;
-    margin-left: 45vw;
+    margin-top: 6vh;
+    margin-left: 44vw;
 }
 
 .history {
-    margin-top: 20px;
+    margin-top: 1.3vh;
     box-sizing: border-box;
-    max-width: 1047px;
+    max-width: 52vw;
     display: flex;
     flex-direction: column;
 }
 
 .rectangle {
     width: 100%;
-    height: 148px;
+    height: 14vh;;
     background-color: rgba(255, 253, 253, 0.42);
-    border: 6px solid #6FD9CD;
+    border: 0.53vw solid #6FD9CD;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -121,7 +121,7 @@ export default {
 .description,
 .data {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 2vw;
     text-align: center;
 }
 
@@ -130,39 +130,44 @@ export default {
 }
 
 img {
-    width: 116px;
-    height: 114px;
+    width: 7vw;
+    height: 14vh;
 }
 
 .description {
     width: 100%;
-    height: 192px;
+    height: 19vh;
     background-color: rgba(255, 253, 253, 0.42);
-    border-right: 6px solid #6FD9CD;
-    border-left: 6px solid #6FD9CD;
-    border-bottom: 6px solid #6FD9CD;
+    border-right: 0.53vw solid #6FD9CD;
+    border-left: 0.53vw solid #6FD9CD;
+    border-bottom: 0.53vh solid #6FD9CD;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
 button {
-    margin-left: 45px;
+    margin-left: 2.2vw;
     cursor: pointer;
-    width: 457px;
-    height: 108px;
+    width: 23vw;
+    height: 12vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #FFFDFD solid;
     text-align: center;
     color: black;
-    font-size: 40px;
+    font-size: 2vw;
     font-weight: bold;
     font-family: Comfortaa;
 }
 
 .buttons {
-    margin-top: 15%;
+    margin-top: 15vh;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #0991A4;
 }
 </style>
 
