@@ -67,11 +67,11 @@ export default {
                     <slot name="body">
                         <p class="text5">{{ store.state.description }}</p>
                         <div class="images">
-                            <p class="text4">Образец:</p>
+                            <p class="text3">Образец:</p>
                             <div class="clock">
                                 <TheClock :minutes=30 :hours=9></TheClock>
                             </div>
-                            <p class="text4">Результат:</p>
+                            <p class="text3">Результат:</p>
                             <img :src="imageUrl" alt="Image from FastAPI" class="image-errors"/>
                         </div>
                     </slot>
@@ -96,11 +96,11 @@ export default {
 }
 
 .modal {
-    width: 1097px;
-    height: 863px;
+    width: 55vw;
+    height: 82vh;
     background: #FFFCFC;
-    border-radius: 20px;
-    border: 8px #6FD9CD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #6FD9CD solid;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
     display: flex;
@@ -121,9 +121,9 @@ export default {
 
 .btn-close {
     border: none;
-    font-size: 20px;
+    font-size: 0.5vw;
     margin-left: auto;
-    margin-right: 2%;
+    margin-right: 2vw;
     cursor: pointer;
     font-weight: bold;
     color: #4AAE9B;
@@ -136,8 +136,8 @@ export default {
 }
 
 .images {
-    margin-top: 50px;
-    width: 800px;
+    margin-top: 2vh;
+    width: 43vw;
     text-align: center;
 }
 
@@ -150,32 +150,41 @@ export default {
 }
 
 .closeknop {
-    width: 88px;
-    height: 90px;
+    width: 5.3vw;
+    height: 9vh;
+}
+
+.text3 {
+    color: black;
+    font-size: 2vw;
+    font-family: Comfortaa;
+    font-weight: 400;
+    word-wrap: break-word;
+    margin-left: 10vw;
 }
 
 .text4 {
     color: black;
-    font-size: 50px;
+    font-size: 2vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
-    margin-left: 20%;
+    margin-left: 15vw;
 }
 
 .text5 {
     text-align: justify;
     color: black;
-    font-size: 50px;
+    font-size: 2vw;
     font-family: Comfortaa;
     font-weight: 700;
     word-wrap: break-word;
-    margin-left: 4%;
+    margin-left: 4vw;
 }
 
 .number1 {
     color: black;
-    font-size: 80px;
+    font-size: 3vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;

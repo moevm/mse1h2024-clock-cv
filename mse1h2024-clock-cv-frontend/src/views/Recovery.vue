@@ -10,12 +10,12 @@
                 <input id="emailInput" type="email" class="Input" placeholder="Введите адрес эл. почты" v-model="email">
             </div>
             <div class="block2">
-                <button class="recoveryknop" type="submit"><p class="text1">Отправить новый пароль на почту</p></button>
+                <button class="recoveryknop" type="submit">Отправить новый пароль на почту</button>
             </div>
             
         </form>
         <div class="block3">
-            <router-link to="/"><button class="returnknop"><p class="text1">Вернуться назад</p></button></router-link>    
+            <router-link to="/"><button class="returnknop">Вернуться назад</button></router-link>    
         </div>
     </div>
 
@@ -87,66 +87,56 @@ export default {
 
 .block2 {
     position: absolute;
-    right: 10%;
+    right: 4.5vw;
 }
 
 .block3 {
     position: absolute;
-    right: 10%;
+    right: 4.5vw;
     bottom: 0;
 }
 
 .Rectangle2 {
-    width: 992px;
-    height: 117px;
+    width: 51vw;;
+    height: 12.5vh;
     background: #FFFDFD;
     margin-left: auto;
-    margin-right: 4%;
-    margin-top: 3%;
+    margin-right: 4vw;
+    margin-top: 3vh;
 }
 
 .Rectangle3 {
-    width: 992px;
-    height: 117px;
+    width: 51vw;
+    height: 12.5vh;
     background: #FFFDFD;
     margin: 1.5% 4% 2% auto;
 }
 
 .Rectangle4 {
-    width: 964px;
-    height: 90px;
+    width: 49.4vw;
+    height: 10vh;
     background: rgba(217, 217, 217, 0);
-    border: 5px #6FD9CD solid;
+    border: 0.3vw #6FD9CD solid;
     transform: translate(1.2%, 7%);
-}
-
-.text1 {
-    width: 740px;
-    height: 79px;
-    color: black;
-    font-size: 40px;
-    font-family: Comfortaa;
-    font-weight: 700;
-    word-wrap: break-word;
 }
 
 .text3 {
     color: black;
-    font-size: 60px;
+    font-size: 3vw;
     font-weight: 700;
     word-wrap: break-word;
     text-align: left;
-    margin-top: 1%;
-    margin-left: 2%;
+    margin-top: 1vh;
+    margin-left: 2vw;
 }
 
 .Input {
     color: rgba(0, 0, 0, 0.35);
-    font-size: 60px;
+    font-size: 3vw;
     font-weight: 400;
     word-wrap: break-word;
-    width: 992px;
-    height: 110px;
+    width: 51vw;
+    height: 12.5vh;
     border: none;
 }
 
@@ -167,14 +157,20 @@ export default {
 }
 
 .recoveryknop {
-    width: 780px;
-    height: 140px;
+    width: 51vw;
+    height: 14vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #FFFDFD solid;
     text-align: center;
-    line-height: 35px;
+    line-height: 3.4vh;
     box-sizing: border-box;
+    text-align: center;
+    color: black;
+    font-size: 2.64vw;
+    font-weight: 400;
+    word-wrap: break-word;
+    font-family: Comfortaa;
 }
 
 .recoveryknop:hover {
@@ -183,12 +179,18 @@ export default {
 }
 
 .returnknop {
-    width: 780px;
-    height: 140px;
+    width: 51vw;
+    height: 14vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #FFFDFD solid;
     text-align: center;
+    text-align: center;
+    color: black;
+    font-size: 2.64vw;
+    font-weight: 400;
+    word-wrap: break-word;
+    font-family: Comfortaa;
 }
 
 .returnknop:hover {
@@ -198,7 +200,7 @@ export default {
 
 .link {
     color: black;
-    font-size: 25px;
+    font-size: 1.2vw;
     font-family: Comfortaa;
     font-weight: 600;
     word-wrap: break-word;

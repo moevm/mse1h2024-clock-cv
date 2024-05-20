@@ -50,11 +50,11 @@ export default {
         </div>
         <div class="Rectangle1">
             <p class="text1">Имя пользователя:<br/>
-                <span class="text1">
+                <span class="text2">
                     {{(store.state.userName.length > 0)?store.state.userName:'...'}}
                 </span>
             </p>
-            <p class="text2">Количество баллов:<br/><span class="number">{{ store.state.result }}</span></p>
+            <p class="text1">Количество баллов:<br/><span class="number">{{ store.state.result }}</span></p>
         </div>
         <div class="block2">
             <button class="detailknop" @click="showModal">Подробнее</button>
@@ -69,9 +69,9 @@ export default {
 .block1 {
     display: flex;
     flex-direction: row;
-    gap: 2%;
+    gap: 1.9vw;
     justify-content: right;
-    margin-top: 2%;
+    margin-top: 2vh;
 }
 
 .block2{
@@ -80,15 +80,15 @@ export default {
 }
 
 .repetknop {
-    width: 457px;
-    height: 108px;
+    width: 24vw;
+    height: 12vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #FFFDFD solid;
     text-align: center;
     font-family: Comfortaa;
     color: black;
-    font-size: 40px;
+    font-size: 2vw;
     font-weight: 400;
     word-wrap: break-word;
 }
@@ -99,14 +99,14 @@ export default {
 }
 
 .historyknop {
-    width: 605px;
-    height: 108px;
+    width: 32vw;
+    height: 12vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #FFFDFD solid;
     text-align: center;
     color: black;
-    font-size: 40px;
+    font-size: 2vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
@@ -118,20 +118,20 @@ export default {
 }
 
 .Rectangle1 {
-    width: 1097px;
-    height: 294px;
+    width: 56.9vw;
+    height: 36vh;
     background: #FFFCFC;
-    border-radius: 20px;
-    border: 8px #6FD9CD solid;
+    border-radius: 1.32vw;
+    border: 0.53vw #6FD9CD solid;
     margin-left: auto;
     margin-right: 0;
-    margin-top: 2%;
+    margin-top: 2vh;
 }
 
 .text1 {
     text-align: center;
     color: black;
-    font-size: 40px;
+    font-size: 2vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
@@ -140,36 +140,36 @@ export default {
 .text2 {
     text-align: center;
     color: black;
-    font-size: 50px;
+    font-size: 2.6vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
-    margin-top: -2%;
+    margin-top: -2vh;
 }
 
 .number {
     color: black;
-    font-size: 80px;
+    font-size: 3vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
 }
 
 .detailknop {
-    width: 457px;
-    height: 108px;
+    width: 25vw;
+    height: 12vh;
     background: #6FD9CD;
-    border-radius: 20px;
-    border: 6px #FFFDFD solid;
-    margin-top: 2%;
+    border-radius: 1.32vw;
+    border: 0.53vw #FFFDFD solid;
+    margin-top: 2vh;
     text-align: center;
     color: black;
-    font-size: 50px;
+    font-size: 2.64vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
     position: fixed;
-    right: 15%;
+    right: 15vw;
     z-index: -1;
 }
 
@@ -179,17 +179,17 @@ export default {
 }
 
 .text3 {
-    width: 963px;
-    height: 76px;
+    width: 50vw;
+    height: 9vh;
     text-align: justify;
     color: black;
-    font-size: 25px;
+    font-size: 1.2vw;
     font-family: Comfortaa;
     font-weight: 400;
     word-wrap: break-word;
     position: fixed;
-    right: 5%;
-    bottom: 7%;
+    right: 5vw;
+    bottom: 7vh;
     z-index: -1;
 }
 </style>

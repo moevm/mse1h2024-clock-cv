@@ -54,13 +54,13 @@ export default {
     display: block;
     position: fixed;
     z-index: 1;
-    left: 5%;
-    top: 2%;
+    left: 5vw;
+    top: 2vh;
     width: 90%;
     height: 95%;
     overflow: auto;
     background-color: #fefefe;
-    border: 6px solid #6FD9CD;
+    border: 0.53vw solid #6FD9CD;
 }
 
 .context{
@@ -70,8 +70,8 @@ export default {
 }
 
 .closeknop {
-    width: 60px;
-    height: 60px;
+    width: 3vw;
+    height: 6vh;
     cursor: pointer;
 }
 
