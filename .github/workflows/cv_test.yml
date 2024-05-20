@@ -14,11 +14,10 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
     
-    - name: Install pytest
+    - name: install pytest
       run: |
         python -m pip install pytest
       
     - name: tests
       run: |
-        cd clockcv-backend/clockcv/CV
         pytest test_cv.py
