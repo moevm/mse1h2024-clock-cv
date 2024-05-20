@@ -1,7 +1,7 @@
 import os
 from .solver import CVSolver,cv2,elementFinder,np
 
-async def cv_image_recognise(file):
+async def cv_image_recognise(file,time):
     contents = await file.read()
     nparr = np.fromstring(contents, np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -15,5 +15,5 @@ async def cv_image_recognise(file):
         file_list = os.listdir(f"clockcv/CV/templates/{i}")
         for name in file_list:
             prototype[i].append(cv2.cvtColor(cv2.imread(f"clockcv/CV/templates/{i}/{name}"), cv2.COLOR_BGR2GRAY))
-    solver = CVSolver(elementFinder(image, prototype))
+    solver = CVSolver(elementFinder(image, prototype), time)
     return solver.start()
