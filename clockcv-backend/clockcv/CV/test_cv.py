@@ -1,5 +1,5 @@
 import os
-from .solver import CVSolver, cv2, elementFinder
+from solver import CVSolver, cv2, elementFinder
 
 def non_async_startup(filename,time):
     image = cv2.imread(filename)
