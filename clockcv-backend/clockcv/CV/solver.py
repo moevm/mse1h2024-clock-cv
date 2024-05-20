@@ -21,11 +21,11 @@ import cv2
 5. Время, которое показывают стрелки(8-10баллов)
 '''
 class CVSolver():
-    def __init__(self, finder: elementFinder):
+    def __init__(self, finder: elementFinder, time):
         self.finder = finder
         self.result = 0
         self.comments = None
-        self.current_time = (9,30)
+        self.current_time = time
         self.angles = [(15,45),(45,75),(75,105),(105,135),(135,165),(165,195),(195,225),(225,255),(255,285),(285,315),(315,345),(345,375)] # углы границы для расположения чисел циферблата
         
     def start(self):
