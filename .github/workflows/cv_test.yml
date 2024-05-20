@@ -15,8 +15,8 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
     
     - name: Install pytest
-        run: |
-          python -m pip install pytest
+      run: |
+        python -m pip install pytest
       
     - name: tests
       run: |
