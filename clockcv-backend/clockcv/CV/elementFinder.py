@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
-from .NumberAnalizer import NumberAnalizer
-from .arrowAnalizer import ArrowAnalizer
+from NumberAnalizer import NumberAnalizer
+from arrowAnalizer import ArrowAnalizer
 
 class elementFinder():
     def __init__(self,image,prototype):

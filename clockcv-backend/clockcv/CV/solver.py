@@ -1,4 +1,4 @@
-from .elementFinder import elementFinder,np
+from elementFinder import elementFinder,np
 import cv2
 
 '''

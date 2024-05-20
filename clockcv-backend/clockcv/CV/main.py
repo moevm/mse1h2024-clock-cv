@@ -1,5 +1,5 @@
 import os
-from .solver import CVSolver,cv2,elementFinder,np
+from solver import CVSolver,cv2,elementFinder,np
 
 async def cv_image_recognise(file,time):
     contents = await file.read()
