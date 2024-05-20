@@ -20,4 +20,5 @@ jobs:
       
     - name: tests
       run: |
-        pytest test_cv.py
+        cd clockcv-backend/clockcv/CV
+        pytest
