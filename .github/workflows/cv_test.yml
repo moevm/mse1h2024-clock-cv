@@ -17,6 +17,7 @@ jobs:
     - name: install pytest
       run: |
         python -m pip install pytest
+        python -m pip install opencv-python
       
     - name: tests
       run: |
