@@ -75,7 +75,7 @@ class CVSolver():
         if len(self.finder.arrow_finder.arrows) == 2:
             self.finder.arrows = self.finder.number_finder.find_new_pair_parameters(*self.finder.arrow_finder.arrows)
         if res == 100:
-            self.comments = "Стрелки на изображении отсутствуют"
+            self.comments = "Стрелка(-и) на изображении отсутствуют"
         elif res == -1 or res >= 60:
             self.comments = "Стрелки не выполняют свою функцию: они одинаковые или указанное время далеко от нужного"
         else:

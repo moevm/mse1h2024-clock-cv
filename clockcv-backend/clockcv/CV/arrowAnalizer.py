@@ -22,7 +22,8 @@ class ArrowAnalizer():
         self.clear_image(gray,numbers)
         if self.print_center(circle) == -1:
             return 100
-        self.find_arrows()
+        if self.find_arrows() == -1:
+            return 100
         self.find_edge_dots(circle)
         self.find_angles(circle)
         self.find_time()
@@ -64,13 +65,14 @@ class ArrowAnalizer():
         contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         for i, c in enumerate(contours):
             dot = cv2.boundingRect(c)
-            #print(dot)
             if hierarchy[0, i, -1] == 0 and dot[2] > 10:
                 self.arrows.append(dot)
-                #cv2.rectangle(self.clean_image,(dot[0],dot[1]),(dot[0]+dot[2],dot[1]+dot[3]),(0,255,0),2)
-        #cv2.circle(self.clean_image,(self.center[1],self.center[0]), 10 ,(0,255,0), -1)
         if len(self.arrows) == 1:
-            self.check_two_arrows()
+            if self.find_all_arrows():
+                self.check_two_arrows()
+            else:
+                return -1
+                
     
     def create_little_arrow(self,i,j, num):
         if i > self.arrows[0][num]:
@@ -80,6 +82,18 @@ class ArrowAnalizer():
             j = int(self.arrows[0][num + 2] / 2)
         return i,j
     
+    def find_all_arrows(self):
+        contour = self.arrows[0]
+        x, y, w, h = contour
+        cropped_image = self.clean_image[y - 5 : y + h + 5, x - 5 : x + w + 5]
+        kernel = np.ones((9,9), np.uint8)
+        eroded = cv2.erode(cropped_image, kernel, iterations=1)
+        dilated = cv2.dilate(eroded, kernel, iterations=2)
+        
+        _, threshold = cv2.threshold(dilated, 127, 255, 0)
+        contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        return len(contours) > 2
+
     def check_two_arrows(self):
         minimum = 1000000
         x,y,w,h = 0,0,0,0
@@ -91,11 +105,10 @@ class ArrowAnalizer():
         x,w = self.create_little_arrow(x, w, 0)
         y,h = self.create_little_arrow(y, h, 1)
         self.arrows.append((x,y,w,h))
-        
 
+        
                 
     def find_edge_dots(self,circle):
-        #print(self.arrows)
         if self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 > self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2:
             self.arrows[0], self.arrows[1] = self.arrows[1], self.arrows[0]
         for ar in self.arrows:
@@ -108,10 +121,6 @@ class ArrowAnalizer():
                         x,y =  j,i
             self.dots.append((x,y))
             cv2.circle(self.clean_image,(x,y), 10 ,(0,255,0), -1)
-        #cv2.imshow('',self.clean_image)
-        #cv2.waitKey(0)
-        #cv2.destroyAllWindows()
-
            
     def find_angles(self,circle):
         A = np.array([circle[0], circle[1] - circle[2]])
@@ -129,11 +138,9 @@ class ArrowAnalizer():
         cv2.line(self.clean_image,(circle[0], - circle[2]+circle[1]), (circle[0], circle[2] + circle[1]),(0,0,255),1)
     
     def find_time(self):
-        #print(self.angles)
         minutes = np.floor(self.angles[1] / 360 * 60) % 60
         hours = np.floor(self.angles[0] / 360 * 12) % 12
         self.found_time = (hours,minutes)
-        #print(self.found_time)
     
     def find_error_rate(self,time):
         if np.abs(self.arrows[0][2] ** 2 + self.arrows[0][3] ** 2 -( self.arrows[1][2] ** 2 + self.arrows[1][3] ** 2)) <=5:
