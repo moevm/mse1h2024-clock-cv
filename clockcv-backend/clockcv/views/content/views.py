@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 @router.post("/upload", response_model=PhotoUploadResponse)
-async def photo_upload(file: UploadFile, user_id: int | None = None):
+async def photo_upload(file: UploadFile, hours: int, minutes: int, user_id: int | None = None):
     if "image" not in file.content_type:
         logger.error(
             "Uploaded file is not image, mime_type=%s", file.content_type
@@ -30,7 +30,7 @@ async def photo_upload(file: UploadFile, user_id: int | None = None):
             description=PhotoUploadStatus.file_not_image
         )
 
-    recognise_result = await cv_image_recognise(file=file)
+    recognise_result = await cv_image_recognise(file=file, time=(hours, minutes))
     if recognise_result[1] != None:
         file_name = uuid.uuid4()
         full_file_name = f'storage/{file_name}.png'

@@ -69,7 +69,7 @@ export default {
                         <div class="images">
                             <p class="text3">Образец:</p>
                             <div class="clock">
-                                <TheClock :minutes=30 :hours=9></TheClock>
+                                <TheClock :minutes="store.state.randomMinutes" :hours="store.state.randomHours"></TheClock>
                             </div>
                             <p class="text3">Результат:</p>
                             <img :src="imageUrl" alt="Image from FastAPI" class="image-errors"/>
