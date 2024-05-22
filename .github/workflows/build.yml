@@ -12,11 +12,10 @@ jobs:
       - name: Build system images (non-pulling)
         run: |
           # build base image
-          cd deploy
-          docker-compose -f docker-compose.dev.yml build --no-cache
+          docker-compose -f ./deploy/docker-compose.dev.yml build --no-cache
       - name: Run docker-compose
         run: |
-          docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans -d
+          docker-compose -f ./deploy/docker-compose.dev.yml up --force-recreate --remove-orphans -d
           sleep 30
       - name: Run tests
         run: |
@@ -24,6 +23,5 @@ jobs:
           curl http://localhost:8000
       - name: Selenium tests
         run: |
-          cd ../tests
-          pip install -r requirements.txt
-          python ./basic_test.py
+          pip install -r ./tests/requirements.txt
+          python ./tests/basic_test.py
