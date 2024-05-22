@@ -21,11 +21,11 @@ import cv2
 5. Время, которое показывают стрелки(8-10баллов)
 '''
 class CVSolver():
-    def __init__(self, finder: elementFinder):
+    def __init__(self, finder: elementFinder, time):
         self.finder = finder
         self.result = 0
         self.comments = None
-        self.current_time = (9,30)
+        self.current_time = time
         self.angles = [(15,45),(45,75),(75,105),(105,135),(135,165),(165,195),(195,225),(225,255),(255,285),(285,315),(315,345),(345,375)] # углы границы для расположения чисел циферблата
         
     def start(self):
@@ -75,7 +75,7 @@ class CVSolver():
         if len(self.finder.arrow_finder.arrows) == 2:
             self.finder.arrows = self.finder.number_finder.find_new_pair_parameters(*self.finder.arrow_finder.arrows)
         if res == 100:
-            self.comments = "Стрелки на изображении отсутствуют"
+            self.comments = "Стрелка(-и) на изображении отсутствуют"
         elif res == -1 or res >= 60:
             self.comments = "Стрелки не выполняют свою функцию: они одинаковые или указанное время далеко от нужного"
         else:

@@ -1,0 +1,25 @@
+name: CV test
+on:
+  pull_request:
+    paths:
+      - 'clockcv-backend/clockcv/CV/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    
+    - name: install pytest
+      run: |
+        python -m pip install pytest
+        python -m pip install opencv-python
+      
+    - name: tests
+      run: |
+        cd clockcv-backend/clockcv/CV
+        pytest
