@@ -16,10 +16,14 @@ jobs:
           docker-compose -f docker-compose.dev.yml build --no-cache
       - name: Run docker-compose
         run: |
-          cd deploy
           docker-compose -f docker-compose.dev.yml up --force-recreate --remove-orphans -d
           sleep 30
       - name: Run tests
         run: |
           curl http://localhost:8080
           curl http://localhost:8000
+      - name: Selenium tests
+        run: |
+          cd ../tests
+          pip install -r requirements.txt
+          python ./basic_test.py
