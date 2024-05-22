@@ -11,6 +11,11 @@
 ### [Презентация итогов 3-oй итерации](https://github.com/moevm/mse1h2024-clock-cv/blob/pres/3.pdf)
 ### [Запись экрана с демонстрацией работы приложения](https://disk.yandex.ru/i/aIh6jxcVMF2kIg)
 
+## Итерация 4
+
+### [Презентация итогов 4-oй итерации](https://github.com/moevm/mse1h2024-clock-cv/blob/main/presentation/4.pdf)
+### [Тестовые изображения для проверки работоспособности приложения](https://github.com/moevm/mse1h2024-clock-cv/tree/main/clockcv-backend/clockcv/CV/test_image)
+
 ### Руководство по запуску:
 
 Для запуска требуется [Docker](https://www.docker.com/products/docker-desktop/)
