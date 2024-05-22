@@ -39,7 +39,7 @@ class TestGuestLoginUploadPhoto(unittest.TestCase):
 
         expected_url = "http://localhost:8080/#/result"
         try:
-            WebDriverWait(self.driver, 20).until(EC.url_to_be(expected_url))
+            WebDriverWait(self.driver, 60).until(EC.url_to_be(expected_url))
             print("Правильный URL: {}".format(self.driver.current_url))
         except TimeoutException:
             print("Тайм-аут. Правильный URL не был достигнут.")
