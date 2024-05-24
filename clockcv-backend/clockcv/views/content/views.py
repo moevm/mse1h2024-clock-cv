@@ -1,6 +1,6 @@
 import logging
 import cv2
-from fastapi import APIRouter, UploadFile
+from fastapi import APIRouter, UploadFile, Form
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 @router.post("/upload", response_model=PhotoUploadResponse)
-async def photo_upload(file: UploadFile, hours: int, minutes: int, user_id: int | None = None):
+async def photo_upload(file: UploadFile, hours: int = Form(), minutes: int = Form(), user_id: int | None = None):
     if "image" not in file.content_type:
         logger.error(
             "Uploaded file is not image, mime_type=%s", file.content_type
